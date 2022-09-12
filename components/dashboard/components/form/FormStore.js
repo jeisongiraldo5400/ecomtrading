@@ -7,7 +7,7 @@ import { Button } from "../Button";
 export const FormStore = () => {
 
 
-    const handlerStore = () => {
+    const handlerStore = (e) => {
         e.preventDefault();
         console.log('handlerStore')
     }

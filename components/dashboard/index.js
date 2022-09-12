@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+//NEXTJS
+import Link from 'next/link';
+
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,6 +16,7 @@ import { get_all_owners } from '../../lib/http';
 //Components
 import { Header } from '../shared/header';
 import { RegisterData } from './registerData';
+
 
 
 export default function Dashboard() {
@@ -46,7 +50,7 @@ export default function Dashboard() {
 
                     {/* contenido de la aplicacion */}
 
-                    <RegisterData />
+                    {/* <RegisterData /> */}
 
                 </div>
             </div>
