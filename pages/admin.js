@@ -1,8 +1,6 @@
 
-
 //Component
 import Dashboard from "../components/dashboard";
-
 
 //Redux toolkit
 import { store } from '../app/store';
