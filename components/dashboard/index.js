@@ -50,7 +50,7 @@ export default function Dashboard() {
 
                     {/* contenido de la aplicacion */}
 
-                    {/* <RegisterData /> */}
+                    <RegisterData /> 
 
                 </div>
             </div>

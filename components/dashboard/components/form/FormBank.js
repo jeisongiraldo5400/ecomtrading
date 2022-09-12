@@ -1,13 +1,34 @@
 
+import React, { useState } from 'react';
+
+//Toast-Notification
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //Components
 import { Button } from "../Button"
 
 export const FormBank = () => {
 
+    const [form, setForm] = useState({
+        banco: '',
+        numero_cuenta: '',
+        tipo_cuenta: ''
+    });
+
     const handlerBank = (e) => {
         e.preventDefault();
         console.log('Formulario enviado');
+
+        toast('🦄 Wow so easy!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     }
 
     return(
@@ -38,7 +59,9 @@ export const FormBank = () => {
             placeholder="Tipo de cuenta"
             className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
-        <Button name='Guardar Datos Bancarios' color='green-500' />
+        <Button name='Guardar Datos Bancarios' color='green-500'/>
+
+        <ToastContainer />
 
     </form>
     )
