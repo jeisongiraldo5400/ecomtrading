@@ -1,5 +1,7 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 
+//Redux
+import { useSelector } from 'react-redux';
 
 //icons
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
@@ -50,6 +52,14 @@ export const RegisterData = () => {
         setFormStore(false);
         setFormBank(true);    
     }
+
+    const banck = useSelector(state => state.registerData.banck);
+
+    useEffect(() => {
+        if(banck?.state) {
+            handlerFormBank();
+        }
+    }, [banck])
 
 
     return(

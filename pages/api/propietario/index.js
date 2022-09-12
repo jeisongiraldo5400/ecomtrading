@@ -1,4 +1,4 @@
-import db from '../../../config/db';
+import pool from '../../../config/db';
 
 export default async function Owner(req, res) {
 
@@ -13,7 +13,7 @@ export default async function Owner(req, res) {
 
 const getAllOwners = async (req, res) => {
     try{
-        const { rows } = await db.query('SELECT * FROM propietario');
+        const { rows } = await pool.query('SELECT * FROM propietario');
         return res.status(200).json(rows);
     }
     catch(err) {
@@ -25,24 +25,25 @@ const createOwner = async (req, res) => {
     try{
 
         const { 
-            cedula,
-            nombres,
-            apellido,
+            cedula, 
+            nombres, 
+            apellidos, 
             telefono,
             edad,
-            email } = req.body;
+            email, 
+        } = req.body;
 
-        const { command } = await db.query(`INSERT INTO propietario
-            (cedula, nombres, apellido, telefono, edad, email)
+        const { command } = await pool.query(`INSERT INTO propietario
+            (cedula, nombres, apellidos, telefono, edad, email)
             VALUES 
             ($1, $2, $3, $4, $5, $6)`, [
                 cedula, 
                 nombres, 
-                apellido, 
+                apellidos, 
                 telefono, 
                 edad, 
-                email]
-            );
+                email
+            ]);
 
         return res.status(200).json({
             message: 'Propietario creado correctamente',
