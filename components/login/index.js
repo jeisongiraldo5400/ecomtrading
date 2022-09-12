@@ -19,9 +19,10 @@ export default function Login() {
                         className="object-contain"
                     />
                 </div>
-                <div className="mt-56 bg-zinc-200 rounded p-10">
-                    <h1 class="text-5xl pb-12 text-bold text-green-700">Ecomtrading</h1>
-                    <label htmlFor="email" className="block text-sx font-bold mb-2">Email</label>
+                <div className="mt-56 bg-zinc-200 rounded p-10 border-2 border-right-solid border-green-600">
+                    <h1 class="text-3xl pb-12 text-bold text-green-700 text-center">ECOMTRADING</h1>
+                    <label className="block text-sx font-bold mb-4">Iniciar sesión</label>
+                    <label htmlFor="email" className="block text-sx font-bold mb-2 text-gray-500">Email</label>
                     <input 
                         type="email" 
                         name="email" 
@@ -29,7 +30,7 @@ export default function Login() {
                         placeholder="example@example.com"
                         className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-md py-1 px-1 block appearance-none leading-normal text-slate-400 w-60"/>
 
-                    <label htmlFor="password" className="block text-sx font-bold mt-2">Password</label>
+                    <label htmlFor="password" className="block text-sx font-bold mt-2 text-gray-500">Password</label>
                     <input 
                         type="password" 
                         name="password" 

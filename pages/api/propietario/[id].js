@@ -3,6 +3,8 @@ import db from '../../../config/db';
 export default async function handler(req, res) {
 
     switch(req.method) {
+        case 'GET':
+            return validateData(req, res); 
         case 'PUT':
             return updateOwner(req, res);
         case 'DELETE':

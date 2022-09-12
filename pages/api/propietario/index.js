@@ -32,7 +32,7 @@ const createOwner = async (req, res) => {
             edad,
             email } = req.body;
 
-        const result = await db.query(`INSERT INTO propietario
+        const { command } = await db.query(`INSERT INTO propietario
             (cedula, nombres, apellido, telefono, edad, email)
             VALUES 
             ($1, $2, $3, $4, $5, $6)`, [
@@ -46,6 +46,7 @@ const createOwner = async (req, res) => {
 
         return res.status(200).json({
             message: 'Propietario creado correctamente',
+            result: command,
             ok: true
         });
 
