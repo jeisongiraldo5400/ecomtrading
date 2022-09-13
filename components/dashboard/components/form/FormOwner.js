@@ -66,6 +66,16 @@ export const FormOwner = () => {
     }
 
 
+    const validateDataOwner = useSelector(state => state.propietario.validateData);
+
+    useEffect(() => {
+        if(validateDataOwner) {
+            setMessage(validateDataOwner);
+            setIsActiveButton(false);
+        }
+    }, [validateDataOwner]);
+
+
     return(
         <form className="bg-green-500 max-w-sm p-4 mt-4 text-green-100 rounded" onSubmit={handlerOwener}>
 
