@@ -7,6 +7,8 @@ export default async function Owner(req, res) {
             return await getAllOwners(req, res);
         case 'POST':
             return createOwner(req, res);
+        case 'PUT':
+            return updateOwner(req, res);
         default: return res.status(405).end();
     }
 }
@@ -55,6 +57,48 @@ const createOwner = async (req, res) => {
 
     }catch(err) {
         return res.json({
+            err,
+            ok: false
+        });
+    }
+}
+
+
+const updateOwner = async (req, res) => {
+    try{
+
+        const { 
+            cedula, 
+            nombres, 
+            apellidos, 
+            telefono,
+            edad,
+            email, 
+        } = req.body;
+
+        await pool.query(`UPDATE propietario SET
+            nombres = $1,
+            apellidos = $2,
+            telefono = $3,
+            edad = $4,
+            email = $5
+            WHERE cedula = $6`, [
+                nombres, 
+                apellidos, 
+                telefono, 
+                edad, 
+                email,
+                cedula
+            ]);
+
+        return res.status(200).json({
+            message: 'Propietario actualizado correctamente',
+            ok: true
+        });
+
+    }
+    catch(err){
+        res.json({
             err,
             ok: false
         });

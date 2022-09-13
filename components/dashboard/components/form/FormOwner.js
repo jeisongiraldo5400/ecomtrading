@@ -8,7 +8,7 @@ import { Button } from "../Button";
 import { Spinner } from '../spinner';
 
 //Http
-import { create_owner, validate_data } from '../../../../lib/http';
+import { create_owner, validate_data, update_owner } from '../../../../lib/http';
 
 //Actions
 import { saveDataOwner } from '../../../../app/reducer/dataOwner';
@@ -21,6 +21,10 @@ export const FormOwner = () => {
     const [message, setMessage] = useState('');
     const [isActiveButton, setIsActiveButton] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [update, setUpdate] = useState(false);
+    //estados para verificar la cedula y el email
+    const [verifyCedula, setVerifyCedula] = useState(false);
+    const [verifyEmail, setVerifyEmail] = useState(false);
 
 
     const [form, setForm] = useState({
@@ -32,11 +36,32 @@ export const FormOwner = () => {
         email: '',
     });
 
+    //Cargar datos en formulario, cuando un propietario se acaba de registrar
+    const dataOwner = useSelector(state => state.dataOwner.getSaveDataOwner);
+
+    useEffect(() => {
+
+        if(dataOwner) {
+            setForm({
+                cedula: dataOwner.cedula,
+                nombres: dataOwner.nombres,
+                apellidos: dataOwner.apellidos,
+                telefono: dataOwner.telefono,
+                edad: dataOwner.edad,
+                email: dataOwner.email,
+            });
+            setUpdate(true);
+            setVerifyCedula(dataOwner.cedula);
+            setVerifyEmail(dataOwner.email);
+        }
+
+    }, [dataOwner]);
+
 
     //Se validan los campos cedula y email que no existan en la base de datos
     const handleChange = (e) => {
         if(e.target.name === 'cedula') {
-            if(e.target.value.length === 10) {
+            if(e.target.value.length === 10 && e.target.value !== verifyCedula) {
                 dispatch(validate_data({ 
                     tipo_data: 'cedula', 
                     data: e.target.value 
@@ -44,7 +69,7 @@ export const FormOwner = () => {
             }
         }
 
-        if(e.target.name === 'email') {
+        if(e.target.name === 'email' && e.target.value !== verifyEmail) {
             if(e.target.value.length > 0) {
                 setTimeout(() => {
                     dispatch(validate_data({ 
@@ -77,10 +102,16 @@ export const FormOwner = () => {
         setIsActiveButton(true);
         setLoading(true);
 
-        //Registrar el propietario
-        dispatch(create_owner(form));
+        if(!update) {
+            //Registrar el propietario
+            dispatch(create_owner(form));
+        } else {
+            dispatch(update_owner(form));
+        }
+
         //Guardar los datos del propietario en el estado global
         dispatch(saveDataOwner(form));
+    
     }
 
 
@@ -95,29 +126,18 @@ export const FormOwner = () => {
             setMessage('');
             setIsActiveButton(false);
         }
-    }, [validateDataOwner]);
+    }, [validateDataOwner, dataOwner]);
     //#endregion
 
-    //Cargar datos en formulario
-    const dataOwner = useSelector(state => state.dataOwner.getSaveDataOwner);
-
-    console.log(dataOwner);
+    
+    //Verificar actualización del propietario
+    const verifyUpdate = useSelector(state => state.propietario.verifyUpdateOwner);
 
     useEffect(() => {
-
-        if(dataOwner) {
-            setForm({
-                cedula: dataOwner.cedula,
-                nombres: dataOwner.nombres,
-                apellidos: dataOwner.apellidos,
-                telefono: dataOwner.telefono,
-                edad: dataOwner.edad,
-                email: dataOwner.email,
-            });
-            setIsActiveButton(true);
+        if(verifyUpdate.ok === true) {
+            setLoading(false);
         }
-
-    }, [dataOwner]);
+    }, [verifyUpdate])
 
 
     return(
