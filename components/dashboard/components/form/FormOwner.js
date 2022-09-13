@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect } from 'react';
-
 
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,12 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 //Components
 import { Button } from "../Button";
 
-
 //Http
 import { create_owner, validate_data } from '../../../../lib/http';
-
-//Actions
-import { getBanck } from '../../../../app/reducer/registerDataSlice';
 
 export const FormOwner = () => {
 
@@ -61,20 +55,6 @@ export const FormOwner = () => {
         });
     }
 
-    const velidateData = useSelector(state => state.propietario.validateData);
-
-    useEffect(() => {
-
-        if(velidateData.ok) {
-            setMessage(velidateData);
-            setIsActiveButton(true);
-        } else {
-            setMessage(velidateData);
-            setIsActiveButton(false);
-        }
-
-    }, [velidateData])
-
 
     const handlerOwener = (e) => {
         e.preventDefault();
@@ -83,12 +63,6 @@ export const FormOwner = () => {
 
         //Registro el propietario
         dispatch(create_owner(form));
-
-        //Obtengo la cedula para registrar los datos bancarios
-        dispatch(getBanck({
-            cedula: form.cedula,
-            state: true
-        }));
     }
 
 

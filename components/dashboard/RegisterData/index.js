@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 //Redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 //icons
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,8 @@ import { FormStore } from '../components/form/FormStore';
 import { FormBank } from '../components/form/FormBank';
 
 export const RegisterData = () => {
+
+    const dispatch = useDispatch();
 
     const [formOwner, setFormOwner] = useState(true);
     const [formDirection, setFormDirection] = useState(false);
@@ -52,15 +54,6 @@ export const RegisterData = () => {
         setFormBank(true);    
     }
 
-    const banck = useSelector(state => state.registerData.banck);
-
-    useEffect(() => {
-        if(banck?.state) {
-            handlerFormBank();
-        }
-    }, [banck])
-
-
     return(
         <div className='sm:cols-span-1 md:cols-span-2 lg:col-span-3'>
         <div className="bg-zinc-100 rounded">
@@ -68,26 +61,31 @@ export const RegisterData = () => {
             <h1 className="p-4">Register</h1>
 
             <div className='grid grid-cols-4 mt-5 ml-5 pr-5 pb-10 justify-items-center'>
+
                 <div className={`bg-${ formOwner ? colorActive: 'gray'} rounded-full h-20 w-20 text-${formOwner ? 'white' : textColor} text-center shadow cursor-pointer border-2 border-green-300 `} onClick={handlerFormOwner}>
                     <p className="mt-6 ml-2 mr-2 text-md text-xs">
                         Datos básicos
                     </p>
                 </div>
-                <div className={`bg-${formBank ? colorActive : 'gray'} rounded-full h-20 w-20 text-${formBank ? 'white' : textColor} shadow cursor-pointer text-center border-2 border-green-300`} onClick={handlerFormBank}>
-                    <p className='mt-6  text-xs'>
-                        Datos Bancarios
-                    </p>
-                </div>
+
                 <div className={`bg-${formDirection ? colorActive : 'gray'} rounded-full h-20 w-20 text-${formDirection ? 'white' : textColor} shadow cursor-pointer border-2 border-green-300`} onClick={handlerFormDirection}>
                     <p className='mt-8 ml-4 text-xs'>
                         Dirección
                     </p>
                 </div>
+
+                <div className={`bg-${formBank ? colorActive : 'gray'} rounded-full h-20 w-20 text-${formBank ? 'white' : textColor} shadow cursor-pointer text-center border-2 border-green-300`} onClick={handlerFormBank}>
+                    <p className='mt-6  text-xs'>
+                        Datos Bancarios
+                    </p>
+                </div>
+                
                 <div className={`bg-${formStore ? colorActive: 'gray'} rounded-full h-20 w-20 text-${ formStore ? 'white' : textColor} shadow cursor-pointer border-2 border-green-300`} onClick={handlerFormStore}>
                     <p className="mt-8 ml-5 text-xs">
                         Almacén
                     </p>
                 </div>
+                
             </div>
 
             <div className="grid grid-cols-1 pb-10">

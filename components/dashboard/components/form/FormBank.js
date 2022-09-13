@@ -24,20 +24,35 @@ export const FormBank = () => {
     }, []);
 
     //States
+    const [nameBank, setNameBank] = useState('');
+    const [nameAccountType, setAccountType] = useState('');
+    const [numberAccount, setNumberAccount] = useState('');
+
+    const [codigoBank, setCodigoBank] = useState('');
+    const [codigoAccountType, setCodigoAccountType] = useState('');
 
     const [isActiveButton, setIsActiveButton] = useState(true);
 
-    const [form, setForm] = useState({
-        banco: '',
-        tipo_cuenta: '',
-        numero_cuenta: '',
-    });
 
+    //Lista de bancos y tipo de cuenta 
+    const dataBank = useSelector(state => state.getData.dataBank);
+    const dataAccountType = useSelector(state => state.getData.dataAccountType);
+
+    
+    //Handles
+    //Guardar datos bancarios
     const handlerBank = (e) => {
         e.preventDefault();
         setIsActiveButton(true);
-        
-        console.log('Formulario enviado');
+
+        let data = {
+            numero_cuenta: numberAccount,
+            tipo_cuenta_id: codigoAccountType,
+            banco_id: codigoBank,
+            propietario_id: ''
+        }
+
+        console.log(data);
 
         toast('🦄 Wow so easy!', {
             position: "top-right",
@@ -49,29 +64,26 @@ export const FormBank = () => {
             progress: undefined,
         });
     }
-
+    
     const handleChange = (e) => {
-
-        console.log(e.target.value);
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        })
+        setNumberAccount(e.target.value);
     }
 
-
-    //Lista de bancos y tipo de cuenta 
-    const dataBank = useSelector(state => state.getData.dataBank);
-    const dataAccountType = useSelector(state => state.getData.dataAccountType);
-
-    //Validamos si biene la cedula del propietario
-    const banck = useSelector(state => state.registerData.banck);
-
-    useEffect(() => {
-        if(banck?.state) {
-            setIsActiveButton(false);
+    const handleBank = (e) => {
+        setNameBank(e.target.value);
+        let codigo = dataBank.find(b => b.nombre === e.target.value)?.id_banco;
+        if(codigo) {
+            setCodigoBank(codigo);
         }
-    }, [banck]);
+    }
+
+    const handleAccountType  = (e) => {
+        setAccountType(e.target.value);
+        let codigo = dataAccountType.find(c => c.descripcion === e.target.value)?.id_tipo_cuenta;
+        if(codigo) {
+            setCodigoAccountType(codigo);
+        }
+    }
 
     return(
         <form className="bg-green-500 max-w-sm p-4 mt-4 text-green-100 rounded" onSubmit={handlerBank}>
@@ -84,11 +96,13 @@ export const FormBank = () => {
             name="banco" 
             id="banco" 
             placeholder="Banco"
+            onChange={handleBank}
+            value={nameBank}
             className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400">
                 <option></option>
                 { 
                     dataBank ? dataBank.map((data, index) => (
-                        <option key={index}>{data.nombre}</option>
+                        <option key={index} >{data.nombre}</option>
                     )) 
                     : ''
                 }
@@ -100,6 +114,8 @@ export const FormBank = () => {
             name="tipo_cuenta" 
             id="tipo_cuenta"
             placeholder="Tipo de cuenta"
+            onChange={handleAccountType}
+            value={nameAccountType}
             className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400">
                 <option></option>
                 { 
@@ -116,7 +132,7 @@ export const FormBank = () => {
             name="numero_cuenta"
             id="numero_cuenta" 
             onChange={handleChange}
-            value={form.numero_cuenta}
+            value={numberAccount}
             className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400" placeholder="Número de cuenta" />
 
         
