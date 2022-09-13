@@ -1,14 +1,15 @@
 import { configureStore }  from '@reduxjs/toolkit';
 
-//Propietario
+//Reducers
 import propietarioReducer from './reducer/propietarioSlice';
 import getDataReducer from './reducer/getDataSlice';
+import directionReducer from './reducer/directionSlice';
 
-
-
+//Store
 export const store = configureStore({
     reducer: {
         propietario: propietarioReducer,
-        getData: getDataReducer
+        getData: getDataReducer,
+        direction: directionReducer
     }
 })

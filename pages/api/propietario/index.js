@@ -17,7 +17,10 @@ const getAllOwners = async (req, res) => {
         return res.status(200).json(rows);
     }
     catch(err) {
-        console.log(err, 'Error en la consulta de propietarios');
+        return res.json({
+            err,
+            ok: false
+        });
     }
 }
 
@@ -52,6 +55,9 @@ const createOwner = async (req, res) => {
         });
 
     }catch(err) {
-        console.log(err);
+        return res.json({
+            err,
+            ok: false
+        });
     }
 }

@@ -1,8 +1,8 @@
 import pool from '../../../config/db';
 
-export default async function Municipality(req, res) {
+export default async function Municipies(req, res) {
         switch(req.method) {
-            case 'GET':
+            case 'POST':
                 return await getAllMunicipalities(req, res);
         }
 }

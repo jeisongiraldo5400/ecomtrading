@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //Form
 import { FormOwner } from '../components/form/FormOwner';
-import { FormDirecction } from '../components/form/FormDirecction';
+import { FormDirection } from '../components/form/FormDirection';
 import { FormStore } from '../components/form/FormStore';
 import { FormBank } from '../components/form/FormBank';
 
@@ -92,7 +92,7 @@ export const RegisterData = () => {
                 <div className="ml-60">
                     { formOwner ? <FormOwner /> : ''}
                     { formBank ? <FormBank /> : '' }
-                    { formDirection ? <FormDirecction /> : '' }
+                    { formDirection ? <FormDirection /> : '' }
                     { formStore ? <FormStore /> : '' }
                 </div>
             </div>
