@@ -36,7 +36,7 @@ const createOwner = async (req, res) => {
             email, 
         } = req.body;
 
-        const { command } = await pool.query(`INSERT INTO propietario
+        await pool.query(`INSERT INTO propietario
             (cedula, nombres, apellidos, telefono, edad, email)
             VALUES 
             ($1, $2, $3, $4, $5, $6)`, [
@@ -50,7 +50,6 @@ const createOwner = async (req, res) => {
 
         return res.status(200).json({
             message: 'Propietario creado correctamente',
-            result: command,
             ok: true
         });
 

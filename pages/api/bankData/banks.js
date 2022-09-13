@@ -5,6 +5,8 @@ export default async function bankData(req, res) {
     switch(req.method) {
         case 'GET':
             return await getAllBank(req, res);
+        case 'POST':
+            return await createaAccountBank(req, res);
         default: return res.status(405).end();
     }
 }
@@ -12,13 +14,13 @@ export default async function bankData(req, res) {
 const getAllBank = async (req, res) => {
 
     try {
-
         const response = await pool.query('SELECT * FROM bancos');
-        res.status(200).json(response.rows);
-
+        return res.status(200).json(response.rows);
     }
     catch(err) {
-        console.log(err);
+        return res.json({
+            err,
+            ok: false
+        });
     }
-
 }
