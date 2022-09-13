@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 //Components
 import { Button } from "../Button";
+import { Spinner } from '../spinner';
 
 //Http
 import { create_owner, validate_data } from '../../../../lib/http';
@@ -14,7 +15,8 @@ export const FormOwner = () => {
     const dispatch = useDispatch();
 
     const [message, setMessage] = useState('');
-    const [isActiveButon, setIsActiveButton] = useState(false);
+    const [isActiveButton, setIsActiveButton] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
     const [form, setForm] = useState({
@@ -56,28 +58,43 @@ export const FormOwner = () => {
     }
 
 
-    const handlerOwener = (e) => {
-        e.preventDefault();
+    //Verificar la creación del propietario
+    const verifyCreationOwner = useSelector(state => state.propietario.verifyCreation);
 
+    useEffect(() => {
+        if(verifyCreationOwner.length > 0) {
+            setLoading(false);
+            //setIsActiveButton(false);
+        }
+    }, [verifyCreationOwner]);
+
+    const handlerOwner = (e) => {
+        e.preventDefault();
         setIsActiveButton(true);
+        setLoading(true);
 
         //Registro el propietario
         dispatch(create_owner(form));
     }
 
 
+    // Validamos si ya existe una cedula o email
     const validateDataOwner = useSelector(state => state.propietario.validateData);
 
     useEffect(() => {
-        if(validateDataOwner) {
+        if(validateDataOwner.ok) {
             setMessage(validateDataOwner);
+            setIsActiveButton(true);
+        }else {
+            setMessage('');
             setIsActiveButton(false);
         }
     }, [validateDataOwner]);
+    //#endregion
 
 
     return(
-        <form className="bg-green-500 max-w-sm p-4 mt-4 text-green-100 rounded" onSubmit={handlerOwener}>
+        <form className="bg-green-500 max-w-sm p-4 mt-4 text-green-100 rounded" onSubmit={handlerOwner}>
 
             <h1 className="text-2xl text-bold text-gray pb-3">Registrar propietario</h1>
 
@@ -154,7 +171,11 @@ export const FormOwner = () => {
                 disabled={message?.ok == true ? true : false}
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400" />
 
-            <Button name="Guardar propietario" color="green-500" disabled={isActiveButon}/>
+            <Button name="Guardar propietario" color="green-500" state={isActiveButton}/>
+
+            <div className="mt-5">
+                <Spinner state={loading}/>
+            </div>
 
         </form>
     )

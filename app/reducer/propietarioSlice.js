@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     owners: [],
     validateData: {},
-    dataOwner: []
+    dataOwner: [],
+    verifyCreation: []
 }
 
 export const propietarioSlice = createSlice({
@@ -19,10 +20,13 @@ export const propietarioSlice = createSlice({
         },
         getDataOwner(state, action) {
             state.dataOwner = action.payload;
+        },
+        verifyCreationOwner(state, action) {
+            state.verifyCreation = action.payload;
         }
     }
 });
 
-export const { getAllOwners, validateData, getDataOwner } = propietarioSlice.actions;
+export const { getAllOwners, validateData, getDataOwner, verifyCreationOwner } = propietarioSlice.actions;
 
 export default propietarioSlice.reducer;
