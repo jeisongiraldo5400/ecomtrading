@@ -13,7 +13,7 @@ const getOwnerData = async (req, res) => {
 
         const { cedula } = req.body;
 
-        const { rows } = await pool.query(`SELECT id_propietario, nombres FROM propietario p where p.cedula = ${cedula}`);
+        const { rows } = await pool.query(`SELECT * FROM propietario p where p.cedula = ${cedula}`);
 
         if(rows.length > 0){
             return res.status(200).json({

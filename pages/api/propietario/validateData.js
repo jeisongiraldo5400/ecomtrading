@@ -10,7 +10,6 @@ export default async function handler(req, res) {
     }
 }
 
-
 const validateData = (req, res) => {
 
     //Verificamos si es el tipo de petición que necesitamos

@@ -10,10 +10,14 @@ import { Spinner } from '../spinner';
 //Http
 import { create_owner, validate_data } from '../../../../lib/http';
 
+//Actions
+import { saveDataOwner } from '../../../../app/reducer/dataOwner';
+
 export const FormOwner = () => {
 
     const dispatch = useDispatch();
 
+    //states
     const [message, setMessage] = useState('');
     const [isActiveButton, setIsActiveButton] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -28,9 +32,9 @@ export const FormOwner = () => {
         email: '',
     });
 
-    const handleChange = (e) => {
 
-        //Se validan los campos cedula y email que no existan en la base de datos
+    //Se validan los campos cedula y email que no existan en la base de datos
+    const handleChange = (e) => {
         if(e.target.name === 'cedula') {
             if(e.target.value.length === 10) {
                 dispatch(validate_data({ 
@@ -62,9 +66,9 @@ export const FormOwner = () => {
     const verifyCreationOwner = useSelector(state => state.propietario.verifyCreation);
 
     useEffect(() => {
-        if(verifyCreationOwner.length > 0) {
+        if(verifyCreationOwner.ok === true) {
             setLoading(false);
-            //setIsActiveButton(false);
+            setIsActiveButton(true);
         }
     }, [verifyCreationOwner]);
 
@@ -73,8 +77,10 @@ export const FormOwner = () => {
         setIsActiveButton(true);
         setLoading(true);
 
-        //Registro el propietario
+        //Registrar el propietario
         dispatch(create_owner(form));
+        //Guardar los datos del propietario en el estado global
+        dispatch(saveDataOwner(form));
     }
 
 
@@ -91,6 +97,27 @@ export const FormOwner = () => {
         }
     }, [validateDataOwner]);
     //#endregion
+
+    //Cargar datos en formulario
+    const dataOwner = useSelector(state => state.dataOwner.getSaveDataOwner);
+
+    console.log(dataOwner);
+
+    useEffect(() => {
+
+        if(dataOwner) {
+            setForm({
+                cedula: dataOwner.cedula,
+                nombres: dataOwner.nombres,
+                apellidos: dataOwner.apellidos,
+                telefono: dataOwner.telefono,
+                edad: dataOwner.edad,
+                email: dataOwner.email,
+            });
+            setIsActiveButton(true);
+        }
+
+    }, [dataOwner]);
 
 
     return(
