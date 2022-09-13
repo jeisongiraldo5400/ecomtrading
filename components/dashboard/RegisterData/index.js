@@ -43,7 +43,6 @@ export const RegisterData = () => {
         setFormDirection(false);
         setFormStore(true);
         setFormBank(false);    
-
     }
 
     const handlerFormBank = () => {
