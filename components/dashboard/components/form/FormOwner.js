@@ -10,6 +10,11 @@ import 'react-toastify/dist/ReactToastify.css';
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 
+
+//Icons 
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 //Components
 import { Button } from "../Button";
 import { Spinner } from '../spinner';
@@ -306,13 +311,18 @@ export const FormOwner = () => {
                     <br />
                     <p className="">Fotografía</p>
                     <br />
-                    <Image
-                        src={pathImage}
-                        alt="Perfil author"
-                        width={150}
-                        height={150}
-                        className="object-contain"
-                    />
+                    {
+                        pathImage !== '' ? 
+                        <Image
+                            src={pathImage}
+                            alt="Perfil author"
+                            width={150}
+                            height={150}
+                            className="object-contain"
+                        /> 
+                    : <FontAwesomeIcon icon={faUser} className="h-32 text-zinc-400" /> 
+                    }
+                    
                 </div>
             </div>
         </div>
