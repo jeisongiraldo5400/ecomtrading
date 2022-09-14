@@ -244,7 +244,7 @@ export const FormOwner = () => {
             </form>
 
             <div className="ml-5 mt-10">
-                <div className="bg-white w-72 ml-10 h-64 rounded-[26px] text-center">
+                <div className="bg-white w-72 ml-10 h-64 rounded-[26px] text-center border-2 shadow-md">
                     <br />
                     <p className="">Fotografía</p>
                 </div>
