@@ -153,7 +153,7 @@ export const FormOwner = () => {
 
 
     return(
-        <form className="bg-green-500 max-w-sm p-4 mt-4 text-green-100 rounded" onSubmit={handlerOwner}>
+        <form className="bg-green-500 max-w-sm p-4 mt-4 mb-4 text-green-100 rounded" onSubmit={handlerOwner}>
 
             <h1 className="text-2xl text-bold text-gray pb-3">Registrar propietario</h1>
 

@@ -57,7 +57,10 @@ export const RegisterData = () => {
         <div className='sm:cols-span-1 md:cols-span-2 lg:col-span-3'>
         <div className="bg-zinc-100 rounded">
             
-            <h1 className="p-4">Register</h1>
+            <div className="text-2xl text-bold text-gray ml-10">
+                <br />
+                { <p>Registrar</p>}
+            </div>
 
             <div className='grid grid-cols-4 mt-5 ml-5 pr-5 pb-10 justify-items-center'>
 
@@ -87,7 +90,7 @@ export const RegisterData = () => {
                 
             </div>
 
-            <div className="grid grid-cols-1 pb-10">
+            <div className="grid grid-cols-1 ml-10 mr-10 border-2 rounded-[50px]">
                 <div className="ml-60">
                     { formOwner ? <FormOwner /> : ''}
                     { formBank ? <FormBank /> : '' }
