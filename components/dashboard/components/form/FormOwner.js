@@ -50,6 +50,9 @@ export const FormOwner = () => {
         email: '',
     });
 
+     //Treamos los datos del propietario desde la bd
+    const searchDataOwner = useSelector(state => state.dataOwner.dataOwners);
+
     //Cargar datos en formulario, cuando un propietario se acaba de registrar
     const dataOwner = useSelector(state => state.dataOwner.getSaveDataOwner);
 
@@ -68,9 +71,13 @@ export const FormOwner = () => {
             setUpdate(true);
             setVerifyCedula(dataOwner.cedula);
             setVerifyEmail(dataOwner.email);
+
+            if(searchDataOwner.ok == true) {
+                setPathImage(`/uploads/${dataOwner.cedula}.png`);
+            }
         }
 
-    }, [dataOwner]);
+    }, [dataOwner, searchDataOwner]);
 
 
     //Se validan los campos cedula y email que no existan en la base de datos
@@ -119,7 +126,7 @@ export const FormOwner = () => {
         setLoading(true);
 
         let upload = {
-            cedula_propietario: '1081417919',
+            cedula_propietario: form.cedula,
         }
 
         if(update === false) {
@@ -174,8 +181,6 @@ export const FormOwner = () => {
 
 
     //Cargar imagen del propietario
-    
-
     const onFileChange = (e) => {
         if(e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
@@ -312,7 +317,7 @@ export const FormOwner = () => {
                     <p className="">Fotografía</p>
                     <br />
                     {
-                        pathImage !== '' ? 
+                        pathImage !== ''? 
                         <Image
                             src={pathImage}
                             alt="Perfil author"
