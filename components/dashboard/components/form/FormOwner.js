@@ -26,6 +26,11 @@ export const FormOwner = () => {
     const [verifyCedula, setVerifyCedula] = useState(false);
     const [verifyEmail, setVerifyEmail] = useState(false);
 
+    console.log({
+        verifyCedula,
+        verifyEmail
+    })
+
 
     const [form, setForm] = useState({
         cedula: '',
@@ -41,7 +46,7 @@ export const FormOwner = () => {
 
     useEffect(() => {
 
-        if(dataOwner) {
+        if(Object.entries(dataOwner).length > 0) {
             setForm({
                 cedula: dataOwner.cedula,
                 nombres: dataOwner.nombres,
@@ -50,6 +55,7 @@ export const FormOwner = () => {
                 edad: dataOwner.edad,
                 email: dataOwner.email,
             });
+
             setUpdate(true);
             setVerifyCedula(dataOwner.cedula);
             setVerifyEmail(dataOwner.email);
@@ -60,8 +66,10 @@ export const FormOwner = () => {
 
     //Se validan los campos cedula y email que no existan en la base de datos
     const handleChange = (e) => {
+
         if(e.target.name === 'cedula') {
-            if(e.target.value.length === 10 && e.target.value !== verifyCedula) {
+            if(e.target.value.length === 10) {
+                console.log(verifyCedula);
                 dispatch(validate_data({ 
                     tipo_data: 'cedula', 
                     data: e.target.value 
@@ -69,7 +77,8 @@ export const FormOwner = () => {
             }
         }
 
-        if(e.target.name === 'email' && e.target.value !== verifyEmail) {
+        if(e.target.name === 'email') {
+            console.log(e.target.value);
             if(e.target.value.length > 0) {
                 setTimeout(() => {
                     dispatch(validate_data({ 
@@ -102,7 +111,7 @@ export const FormOwner = () => {
         setIsActiveButton(true);
         setLoading(true);
 
-        if(!update) {
+        if(update === false) {
             //Registrar el propietario
             dispatch(create_owner(form));
         } else {
@@ -120,13 +129,19 @@ export const FormOwner = () => {
 
     useEffect(() => {
         if(validateDataOwner.ok) {
-            setMessage(validateDataOwner);
-            setIsActiveButton(true);
+            if(form.cedula !== verifyCedula || form.email !== verifyEmail) {
+                setMessage(validateDataOwner);
+                setIsActiveButton(true);
+            } else {
+                setMessage('');
+                setIsActiveButton(false);
+            }
+            
         }else {
             setMessage('');
             setIsActiveButton(false);
         }
-    }, [validateDataOwner, dataOwner]);
+    }, [validateDataOwner, dataOwner, verifyCedula, form.cedula, form.email, verifyEmail]);
     //#endregion
 
     
