@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-    dataOwners: [],
+    searchDataOwner: [],
     searchDataOwner: [],
     getSaveDataOwner: [],
     getSaveDataDirection: [],
@@ -15,7 +15,7 @@ export const dataOwnerSlice = createSlice({
     initialState,
     reducers: {
         getAllDataOwner(state, action) {
-            state.dataOwner = action.payload;
+            state.dataOwners = action.payload;
         },
         searchDataOwner(state, action) {
             state.searchDataOwner = action.payload;

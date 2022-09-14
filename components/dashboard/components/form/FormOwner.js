@@ -26,12 +26,6 @@ export const FormOwner = () => {
     const [verifyCedula, setVerifyCedula] = useState(false);
     const [verifyEmail, setVerifyEmail] = useState(false);
 
-    console.log({
-        verifyCedula,
-        verifyEmail
-    })
-
-
     const [form, setForm] = useState({
         cedula: '',
         nombres: '',
@@ -69,7 +63,6 @@ export const FormOwner = () => {
 
         if(e.target.name === 'cedula') {
             if(e.target.value.length === 10) {
-                console.log(verifyCedula);
                 dispatch(validate_data({ 
                     tipo_data: 'cedula', 
                     data: e.target.value 
@@ -78,7 +71,6 @@ export const FormOwner = () => {
         }
 
         if(e.target.name === 'email') {
-            console.log(e.target.value);
             if(e.target.value.length > 0) {
                 setTimeout(() => {
                     dispatch(validate_data({ 
@@ -122,7 +114,6 @@ export const FormOwner = () => {
         dispatch(saveDataOwner(form));
     
     }
-
 
     // Validamos si ya existe una cedula o email
     const validateDataOwner = useSelector(state => state.propietario.validateData);

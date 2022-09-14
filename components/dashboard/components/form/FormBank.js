@@ -24,6 +24,7 @@ export const FormBank = () => {
     }, []);
 
     //States
+    const [message, setMessage] = useState('');
     const [nameBank, setNameBank] = useState('');
     const [nameAccountType, setAccountType] = useState('');
     const [numberAccount, setNumberAccount] = useState('');
@@ -31,7 +32,7 @@ export const FormBank = () => {
     const [codigoBank, setCodigoBank] = useState('');
     const [codigoAccountType, setCodigoAccountType] = useState('');
 
-    const [isActiveButton, setIsActiveButton] = useState(true);
+    const [isActiveButton, setIsActiveButton] = useState(false);
 
 
     //Lista de bancos y tipo de cuenta 
@@ -85,8 +86,25 @@ export const FormBank = () => {
         }
     }
 
+    //Treamos los datos del propietario desde la bd
+    const searchDataOwner = useSelector(state => state.dataOwner.searchDataOwner);
+
+    useEffect(() => {
+
+        if(searchDataOwner.length > 0) {
+            setIdPropietario(searchDataOwner.data[0].id_propietario);
+            setIsActiveButton(false);
+        } else {
+            setMessage('No se han registrados datos del propietario');
+            setIsActiveButton(true);
+        }
+
+    }, [searchDataOwner]);
+
     return(
         <form className="bg-green-500 max-w-sm p-4 mt-4 text-green-100 rounded" onSubmit={handlerBank}>
+        
+        { message ? <p className="bg-blue-600 py-2 text-center text-white mb-8 rounded">{message}</p> : '' }
 
         <h1 className="text-2xl text-bold text-gray pb-3">Datos Bancarios</h1>
 
@@ -137,7 +155,7 @@ export const FormBank = () => {
 
         
 
-        <Button name='Guardar Datos Bancarios' color='green-500' disabled={isActiveButton} />
+        <Button name='Guardar Datos Bancarios' color='green-500' state={isActiveButton} />
 
         <ToastContainer />
 

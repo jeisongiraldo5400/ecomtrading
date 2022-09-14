@@ -2,7 +2,7 @@ import pool from '../../../config/db';
 
 export default async function handler(req, res) {
     switch (req.method) {
-        case 'GET':
+        case 'POST':
             return await getOwnerData(req, res);
         default: return res.status(405).end();
     }
@@ -12,6 +12,8 @@ const getOwnerData = async (req, res) => {
     try{
 
         const { cedula } = req.body;
+
+        console.log(cedula);
 
         const { rows } = await pool.query(`SELECT * FROM propietario p where p.cedula = ${cedula}`);
 

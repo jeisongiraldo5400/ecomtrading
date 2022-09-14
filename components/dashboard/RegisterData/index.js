@@ -25,7 +25,6 @@ export const RegisterData = () => {
     const [colorActive] = useState('green-600');
     const [textColor] = useState('green-700');
 
-
     const handlerFormOwner = () => {
         setFormOwner(true);
         setFormDirection(false);
@@ -81,7 +80,7 @@ export const RegisterData = () => {
                 </div>
                 
                 <div className={`bg-${formStore ? colorActive: 'gray'} rounded-full h-20 w-20 text-${ formStore ? 'white' : textColor} shadow cursor-pointer border-2 border-green-300`} onClick={handlerFormStore}>
-                    <p className="mt-8 ml-5 text-xs">
+                    <p className="mt-8 ml-4 text-xs">
                         Almacén
                     </p>
                 </div>
