@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
+
+//Toast-Notification
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -102,6 +107,8 @@ export const FormStore = () => {
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
             <Button name='Guardar Almacén' color='green-500' state={isActiveButton} />
+
+            <ToastContainer />
 
         </form>
     )

@@ -7,6 +7,7 @@ const initialState = {
     verifyAccountBank: [],
     selecAccountBank: [],
     productsType: [],
+    updateAccountBank: [],
 }
 
 export const getDataSlice = createSlice({
@@ -27,11 +28,14 @@ export const getDataSlice = createSlice({
         },
         getAllProductsType(state, action) {
             state.productsType = action.payload;
+        },
+        updateAccountBank(state, action) {
+            state.updateAccountBank = action.payload;
         }
     }
 });
 
 
-export const { getAllDataBank, getAllDataAccountType, createAccountBank, selectAccountBank, getAllProductsType } = getDataSlice.actions;
+export const { getAllDataBank, getAllDataAccountType, createAccountBank, selectAccountBank, getAllProductsType, updateAccountBank } = getDataSlice.actions;
 
 export default getDataSlice.reducer;

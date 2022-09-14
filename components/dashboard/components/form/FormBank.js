@@ -1,18 +1,22 @@
 
 import React, { useState, useEffect } from 'react';
 
-//Redux
-import { useSelector, useDispatch } from 'react-redux';
-
 //Toast-Notification
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+//Redux
+import { useSelector, useDispatch } from 'react-redux';
+
 //http
-import { get_all_bancks, get_all_account_type } from '../../../../lib/http';
+import { get_all_bancks, get_all_account_type, create_bank_account, update_bank_account } from '../../../../lib/http';
 
 //Components
 import { Button } from "../Button"
+import { Spinner } from '../spinner';
+
+//Actions 
+import { saveDataBank } from '../../../../app/reducer/dataOwner'
 
 export const FormBank = () => {
 
@@ -24,6 +28,7 @@ export const FormBank = () => {
     }, []);
 
     //States
+    const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [nameBank, setNameBank] = useState('');
     const [nameAccountType, setAccountType] = useState('');
@@ -34,37 +39,58 @@ export const FormBank = () => {
 
     const [idPropietario, setIdPropietario] = useState('');
     const [isActiveButton, setIsActiveButton] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
 
 
     //Lista de bancos y tipo de cuenta 
     const dataBank = useSelector(state => state.getData.dataBank);
     const dataAccountType = useSelector(state => state.getData.dataAccountType);
 
+    //Datos bancarios del propietario
+    const dataBankOwner = useSelector(state => state.dataOwner.getSaveDataBank);
+
+    useEffect(() => {
+
+        if(Object.entries(dataBankOwner).length > 0) {
+            const nameBank = dataBank.find(b => b.id_banco === dataBankOwner.banco_id)?.nombre;
+            setNameBank(nameBank);
+            const nameAccountType = dataAccountType.find(t => t.id_tipo_cuenta === dataBankOwner.tipo_cuenta_id)?.descripcion;
+            setAccountType(nameAccountType);
+            
+            setNumberAccount(dataBankOwner.numero_cuenta);
+            setCodigoAccountType(dataBankOwner.tipo_cuenta_id);
+            setCodigoBank(dataBankOwner.banco_id);
+            setIdPropietario(dataBankOwner.propietario_id);
+            setIsUpdate(true);
+        }
+
+    }, [ dataBankOwner ]);
+
     
     //Handles
     //Guardar datos bancarios
     const handlerBank = (e) => {
         e.preventDefault();
+        
+        setLoading(true);
         setIsActiveButton(true);
 
         let data = {
             numero_cuenta: numberAccount,
             tipo_cuenta_id: codigoAccountType,
             banco_id: codigoBank,
-            propietario_id: ''
+            propietario_id: idPropietario
         }
 
-        console.log(data);
-
-        toast('🦄 Wow so easy!', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
+        if(isUpdate === false) {
+            dispatch(create_bank_account(data));
+            toast.success('Cuenta bancaria registrada con éxito');
+        } else {
+            dispatch(update_bank_account(data));
+            toast.success('Cuenta bancaria actualizada con éxito');
+        }
+        
+        dispatch(saveDataBank(data));
     }
     
     const handleChange = (e) => {
@@ -103,6 +129,16 @@ export const FormBank = () => {
 
     }, [searchDataOwner]);
 
+    //Validamos que se actualizo la cuenta 
+    const updateBank = useSelector(state => state.getData.updateAccountBank);
+
+    useEffect(() => {
+        if(updateBank.ok === true) {
+            setLoading(false);
+            setIsActiveButton(false);
+        }
+    }, [updateBank]);
+
     return(
         <form className="bg-green-500 max-w-sm p-4 mt-4 text-green-100 rounded" onSubmit={handlerBank}>
         
@@ -129,6 +165,7 @@ export const FormBank = () => {
             placeholder="Banco"
             onChange={handleBank}
             value={nameBank}
+            required
             className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400">
                 <option></option>
                 { 
@@ -147,6 +184,7 @@ export const FormBank = () => {
             placeholder="Tipo de cuenta"
             onChange={handleAccountType}
             value={nameAccountType}
+            required
             className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400">
                 <option></option>
                 { 
@@ -164,11 +202,16 @@ export const FormBank = () => {
             id="numero_cuenta" 
             onChange={handleChange}
             value={numberAccount}
+            required
             className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400" placeholder="Número de cuenta" />
 
         
 
-        <Button name='Guardar Datos Bancarios' color='green-500' state={isActiveButton} />
+        <Button name='Guardar datos bancarios' color='green-500' state={isActiveButton} />
+
+        <div className="mt-5">
+                <Spinner state={loading}/>
+        </div>
 
         <ToastContainer />
 

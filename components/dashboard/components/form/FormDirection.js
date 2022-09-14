@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+//Toast-Notification
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 //Redux 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -93,7 +97,9 @@ export const FormDirection = () => {
 
         if(update === false) {
             dispatch(create_direcction(data));
+            toast.success('Dirección registrada con éxito');
         } else {
+            toast.success('Dirección actualizada con éxito');
             dispatch(update_direction(data));
         }
 
@@ -244,6 +250,8 @@ export const FormDirection = () => {
             <div className="mt-5">
                 <Spinner state={loading}/>
             </div>
+
+            <ToastContainer />
 
         </form>
     )

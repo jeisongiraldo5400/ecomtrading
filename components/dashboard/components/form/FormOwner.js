@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+//Toast-Notification
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -105,9 +109,11 @@ export const FormOwner = () => {
 
         if(update === false) {
             //Registrar el propietario
+            toast.success('Propietario creado con éxito');
             dispatch(create_owner(form));
         } else {
             dispatch(update_owner(form));
+            toast.success('Propietario actualizado con éxito');
         }
 
         //Guardar los datos del propietario en el estado global
@@ -229,6 +235,8 @@ export const FormOwner = () => {
             <div className="mt-5">
                 <Spinner state={loading}/>
             </div>
+
+            <ToastContainer />
 
         </form>
     )
