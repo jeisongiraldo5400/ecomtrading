@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+//NextImage
+import Image from 'next/image'
+
 //Toast-Notification
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,6 +19,7 @@ import { create_owner, validate_data, update_owner } from '../../../../lib/http'
 
 //Actions
 import { saveDataOwner } from '../../../../app/reducer/dataOwner';
+import { SERVER_FILES_MANIFEST } from 'next/dist/shared/lib/constants';
 
 export const FormOwner = () => {
 
@@ -29,6 +33,9 @@ export const FormOwner = () => {
     //estados para verificar la cedula y el email
     const [verifyCedula, setVerifyCedula] = useState(false);
     const [verifyEmail, setVerifyEmail] = useState(false);
+    //img 
+    const [file, setFile] = useState('');
+    const [pathImage, setPathImage] = useState('');
 
     const [form, setForm] = useState({
         cedula: '',
@@ -152,6 +159,30 @@ export const FormOwner = () => {
     }, [verifyUpdate])
 
 
+    //Cargar imagen del propietario
+    
+
+    const onFileChange = (e) => {
+        if(e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            if(file.type.includes("image")) {
+                const render = new FileReader();
+                /*reader.addEventListener('load', () => {
+                    setImage(reader.result);
+                });*/
+                render.readAsDataURL(file);
+
+                render.onload = () => {
+                    setPathImage(render.result);
+                }
+
+                setFile(file);
+            } else {
+                toast.warning('Debe seleccionar una imagen');
+            }
+        }
+    }
+
     return(
         <div className="grid grid-cols-2">
             <form className="bg-green-500 max-w-sm p-4 mt-4 mb-4 ml-10 text-green-100 rounded-[16px]" onSubmit={handlerOwner}>
@@ -233,6 +264,24 @@ export const FormOwner = () => {
                 disabled={message?.ok == true ? true : false}
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400" />
 
+            <label htmlFor="image" className="block text-sx font-bold mb-2 mt-2">Imagen: </label>
+            <input 
+                type="file" 
+                name="image" 
+                id="image" 
+                placeholder="image"
+                onChange={onFileChange}
+                required
+                disabled={message?.ok == true ? true : false}
+                className="
+                block w-full text-sm text-slate-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-full file:border-0
+                file:text-sm file:font-semibold
+                file:bg-violet-50 file:text-black
+                hover:file:bg-violet-100 " />
+            
+
             <Button name="Guardar propietario" color="green-500" state={isActiveButton}/>
 
             <div className="mt-5">
@@ -247,6 +296,14 @@ export const FormOwner = () => {
                 <div className="bg-white w-72 ml-10 h-64 rounded-[26px] text-center border-2 shadow-md">
                     <br />
                     <p className="">Fotografía</p>
+                    <br />
+                    <Image
+                        src={pathImage}
+                        alt="Perfil author"
+                        width={150}
+                        height={150}
+                        className="object-contain"
+                    />
                 </div>
             </div>
         </div>
