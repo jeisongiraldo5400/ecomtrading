@@ -139,8 +139,19 @@ export const FormBank = () => {
         }
     }, [updateBank]);
 
+    //Verificar si se regitro la cuenta bancaria
+    const verifyCreateBank = useSelector(state => state.getData.verifyAccountBank);
+
+    useEffect(() => {
+
+        if(verifyCreateBank.ok === true) {
+            setLoading(false);
+        }
+
+    }, [verifyCreateBank]);
+
     return(
-        <form className="bg-green-500 max-w-sm p-4 mt-4 mb-4 text-green-100 rounded" onSubmit={handlerBank}>
+        <form className="bg-green-500 max-w-sm p-4 mt-4 mb-4 ml-60 text-green-100 rounded-[16px]" onSubmit={handlerBank}>
         
         { message ? <p className="bg-blue-600 py-2 text-center text-white mb-8 rounded">{message}</p> : '' }
 

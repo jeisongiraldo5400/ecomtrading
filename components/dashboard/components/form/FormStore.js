@@ -156,7 +156,7 @@ export const FormStore = () => {
 
 
     return (
-        <form className="bg-green-500 max-w-sm p-4 mt-4 mb-4 text-green-100 rounded" onSubmit={handlerStore}>
+        <form className="bg-green-500 max-w-sm p-4 mt-4 mb-4 ml-60 text-green-100 rounded-[16px]" onSubmit={handlerStore}>
 
             { message ? <p className="bg-blue-600 py-2 text-center text-white mb-8 rounded">{message}</p> : '' }
 

@@ -91,12 +91,10 @@ export const RegisterData = () => {
             </div>
 
             <div className="grid grid-cols-1 ml-10 mr-10 border-2 rounded-[50px]">
-                <div className="ml-60">
-                    { formOwner ? <FormOwner /> : ''}
-                    { formBank ? <FormBank /> : '' }
-                    { formDirection ? <FormDirection /> : '' }
-                    { formStore ? <FormStore /> : '' }
-                </div>
+                { formOwner ? <FormOwner /> : ''}
+                { formBank ? <FormBank /> : '' }
+                { formDirection ? <FormDirection /> : '' }
+                { formStore ? <FormStore /> : '' }
             </div>
 
         </div>

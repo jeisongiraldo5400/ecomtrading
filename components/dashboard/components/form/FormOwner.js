@@ -153,9 +153,12 @@ export const FormOwner = () => {
 
 
     return(
-        <form className="bg-green-500 max-w-sm p-4 mt-4 mb-4 text-green-100 rounded" onSubmit={handlerOwner}>
+        <div className="grid grid-cols-2">
+            <form className="bg-green-500 max-w-sm p-4 mt-4 mb-4 ml-10 text-green-100 rounded-[16px]" onSubmit={handlerOwner}>
 
-            <h1 className="text-2xl text-bold text-gray pb-3">Registrar propietario</h1>
+            <h1 className="text-2xl text-bold text-gray pb-3">{
+                update === false ? 'Registrar Propietario' : 'Actualizar Propietario'
+            }</h1>
 
             <label htmlFor="cedula" className="block text-sx font-bold mb-2">Cedula: </label>
             <input 
@@ -166,7 +169,7 @@ export const FormOwner = () => {
                 value={form.cedula}
                 required
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400" placeholder="Cédula" />
-            
+
             { message?.tipo === 'cedula' ? <label className="block p-2 bg-red-500 mt-2 rounded-md mb-2">{ message.message }</label> : ''}
 
             <label htmlFor="nombres" className="block text-sx font-bold mb-2 mt-2">Nombres: </label>
@@ -203,7 +206,7 @@ export const FormOwner = () => {
                 value={form.email}
                 required
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
-            
+
             { message?.tipo === 'email' ? <label className="block p-2 bg-red-500 mt-2 rounded-md mb-2">{ message.message }</label> : ''}
 
             <label htmlFor="telefono" className="block text-sx font-bold mb-2 mt-2">Telefono:</label>
@@ -238,6 +241,14 @@ export const FormOwner = () => {
 
             <ToastContainer />
 
-        </form>
+            </form>
+
+            <div className="ml-5 mt-10">
+                <div className="bg-white w-72 ml-10 h-64 rounded-[26px] text-center">
+                    <br />
+                    <p className="">Fotografía</p>
+                </div>
+            </div>
+        </div>
     )
 }
