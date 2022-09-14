@@ -13,6 +13,9 @@ import { Button } from "../Button";
 //http
 import { get_all_product_type, search_bank_account, validate_data } from '../../../../lib/http';
 
+//Actions
+import { saveDataStore } from '../../../../app/reducer/dataOwner';
+
 export const FormStore = () => {
 
     const dispatch = useDispatch();
@@ -27,6 +30,13 @@ export const FormStore = () => {
     const [messageBank, setMessageBank] = useState('');
     const [idPropietario, setIdPropietario] = useState('');
     const [isActiveButton, setIsActiveButton] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
+
+    const [nameProduct, setNameProduct] = useState('');
+    const [codeProduct, setCodeProduct] = useState('');
+
+    const [nameAccountType, setNameAccountType] = useState('');
+    const [codeAccountType, setCodeAccountType] = useState('');
 
     const [form, setForm] = useState({
         cantidad: '',
@@ -36,9 +46,14 @@ export const FormStore = () => {
         cuenta_bancaria: ''
     });
 
-
     //Traer los tipos de productos de la bd
     const products = useSelector(state => state.getData.productsType);
+
+    const handleProduct = (e) => {
+        setNameProduct(e.target.value);
+        const codeProduct = products.find(p => p.nombre === e.target.value)?.id_tipo_producto;
+        setCodeProduct(codeProduct);
+    }
 
     //Handler
     const handlerStore = (e) => {
@@ -46,14 +61,24 @@ export const FormStore = () => {
 
         let data = {
             propietario_id: idPropietario,
-            tipo_producto_id: '',
+            tipo_producto_id: codeProduct,
             cantidad: form.cantidad,
             telefono: form.telefono,
             nombre: form.nombre,
             nit: form.nit,
-            cuenta_bancaria_id: '',
+            cuenta_bancaria_id: codeAccountType,
         }
-        console.log(form)
+
+        if(isUpdate === false) {
+            //registrar almacen
+            toast.success('Almacén registrado correctamente');
+        } else {
+            //actualizar almacen
+            toast.success('Almacén actualizado correctamente');
+        }
+
+        console.log(data);
+        dispatch(saveDataStore(data));
     }
 
     const handleChange = (e) => {
@@ -72,6 +97,7 @@ export const FormStore = () => {
             [e.target.name]: e.target.value
         })
     }
+
 
     //Treamos los datos del propietario desde la bd
     const searchDataOwner = useSelector(state => state.dataOwner.dataOwners);
@@ -106,19 +132,28 @@ export const FormStore = () => {
         }
     }, [validateNit]);
 
-    const validateBackAccount = useSelector(state => state.getData.searchAccountBank);
+
+    //Traemos los datos bancarios del propietario desde la bd
+    const dataBackAccount = useSelector(state => state.getData.searchAccountBank);
 
     useEffect(() => {
 
-        if(validateBackAccount.length > 0) {
-            console.log(validateBackAccount);
+        if(dataBackAccount.length > 0) {
+            console.log(dataBackAccount);
         } else {
             setIsActiveButton(true);
             setMessageBank('No se encontraron datos bancarios');
             
         }
 
-    }, [validateBackAccount]);
+    }, [dataBackAccount]);
+
+    const handleAccountType = (e) => {
+        setNameAccountType(e.target.value);
+        const codeAccountType = dataBackAccount.find(p => p.numero_cuenta === e.target.value)?.id_cuenta_bancaria;
+        setCodeAccountType(codeAccountType);
+    }
+
 
     return (
         <form className="bg-green-500 max-w-sm p-4 mt-4 mb-4 text-green-100 rounded" onSubmit={handlerStore}>
@@ -170,12 +205,16 @@ export const FormStore = () => {
                 name="tipo_producto"
                 id="tipo_producto" 
                 required
+                value={nameProduct}
+                onChange={handleProduct}
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400" placeholder="Café, Cacao, Algodon">
                     <option></option>
                 { 
+                    products ? 
                     products.map((product, index) => (
                         <option key={index}>{product.nombre}</option>
                     )) 
+                    : ''
                 }
                 </select>
 
@@ -196,8 +235,17 @@ export const FormStore = () => {
                 name="cuenta_bancaria" 
                 id="cuenta_bancaria" 
                 placeholder="Cuenta bancaria"
+                required
+                value={nameAccountType}
+                onChange={handleAccountType}
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400">
                     <option></option>
+                    {
+                        dataBackAccount ? dataBackAccount.map((account, index) => (
+                            <option key={index}>{account.numero_cuenta}</option>
+                        ))
+                        : ''
+                    }
                 </select>
 
             <label htmlFor="telefono" className="block text-sx font-bold mb-2">Teléfono: </label>
