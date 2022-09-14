@@ -201,7 +201,9 @@ export const FormStore = () => {
                 </div> : ''
             }
 
-            <h1 className="text-2xl text-bold text-gray pb-3">Registrar Almacén</h1>
+            <h1 className="text-2xl text-bold text-gray pb-3">
+                { isUpdate === false ? 'Registrar Almacén' : 'Actualizar Almacén' }
+            </h1>
 
             <label htmlFor="nit" className="block text-sx font-bold mb-2">NIT: </label>
             <input 

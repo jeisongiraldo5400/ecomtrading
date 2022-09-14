@@ -197,7 +197,9 @@ export const FormDirection = () => {
                     </ul>
                 </div> : ''
             }
-            <h1 className="text-2xl text-bold text-gray pb-3">Dirección</h1>
+            <h1 className="text-2xl text-bold text-gray pb-3">
+                {update === false ? 'Registrar dirección' : 'Actualizar dirección'}
+            </h1>
 
             <label htmlFor="direccion" className="block text-sx font-bold mb-2">Dirección: </label>
             <input 

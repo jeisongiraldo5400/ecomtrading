@@ -166,7 +166,9 @@ export const FormBank = () => {
             </div> : ''
         }
 
-        <h1 className="text-2xl text-bold text-gray pb-3">Datos Bancarios</h1>
+        <h1 className="text-2xl text-bold text-gray pb-3">
+            { isUpdate === false ? 'Registrad Datos Bancarios' : 'Actualizar datos bancarios' }
+        </h1>
 
         <label htmlFor="banco" className="block text-sx font-bold mb-2">Seleccione Banco: </label>
         <select 
