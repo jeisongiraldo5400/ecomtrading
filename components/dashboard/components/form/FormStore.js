@@ -12,6 +12,7 @@ export const FormStore = () => {
 
     //states 
     const [message, setMessage] = useState('');
+    const [idPropietario, setIdPropietario] = useState('');
     const [isActiveButton, setIsActiveButton] = useState(false);
 
     const handlerStore = (e) => {
@@ -20,13 +21,14 @@ export const FormStore = () => {
     }
 
     //Treamos los datos del propietario desde la bd
-    const searchDataOwner = useSelector(state => state.dataOwner.searchDataOwner);
+    const searchDataOwner = useSelector(state => state.dataOwner.dataOwners);
 
     useEffect(() => {
 
-        if(searchDataOwner.length > 0) {
+        if(searchDataOwner.ok === true) {
             setIdPropietario(searchDataOwner.data[0].id_propietario);
             setIsActiveButton(false);
+            setMessage('');
         } else {
             setMessage('No se han registrados datos del propietario');
             setIsActiveButton(true);
@@ -38,6 +40,17 @@ export const FormStore = () => {
         <form className="bg-green-500 max-w-sm p-4 mt-4 text-green-100 rounded" onSubmit={handlerStore}>
 
             { message ? <p className="bg-blue-600 py-2 text-center text-white mb-8 rounded">{message}</p> : '' }
+
+            {
+                searchDataOwner.ok === true ? 
+                <div className="bg-green-600 p-2 rounded-md mb-4">
+                    <ul>
+                        <li className="text-2xl">Propietario</li>
+                        <li className="ml-5 bold">{searchDataOwner.data[0].nombres}</li>
+                        <li className="ml-5">{searchDataOwner.data[0].cedula}</li>
+                    </ul>
+                </div> : ''
+            }
 
             <h1 className="text-2xl text-bold text-gray pb-3">Registrar Almacén</h1>
 
