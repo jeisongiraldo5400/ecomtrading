@@ -24,6 +24,7 @@ import { create_owner, validate_data, update_owner, upload_imgs_owner, update_im
 
 //Actions
 import { saveDataOwner } from '../../../../app/reducer/dataOwner';
+import { ImageLoading } from '../ImageLoading';
 
 export const FormOwner = () => {
 
@@ -34,12 +35,15 @@ export const FormOwner = () => {
     const [isActiveButton, setIsActiveButton] = useState(false);
     const [loading, setLoading] = useState(false);
     const [update, setUpdate] = useState(false);
+
     //estados para verificar la cedula y el email
     const [verifyCedula, setVerifyCedula] = useState(false);
     const [verifyEmail, setVerifyEmail] = useState(false);
+
     //img 
     const [file, setFile] = useState('');
     const [pathImage, setPathImage] = useState('');
+    const [image, setImage] = useState('');
 
     const [form, setForm] = useState({
         cedula: '',
@@ -59,6 +63,7 @@ export const FormOwner = () => {
     useEffect(() => {
 
         if(Object.entries(dataOwner).length > 0) {
+
             setForm({
                 cedula: dataOwner.cedula,
                 nombres: dataOwner.nombres,
@@ -72,9 +77,10 @@ export const FormOwner = () => {
             setVerifyCedula(dataOwner.cedula);
             setVerifyEmail(dataOwner.email);
 
-            if(searchDataOwner.ok == true) {
-                setPathImage(`/uploads/${dataOwner.cedula}.png`);
-            }
+            /*if(searchDataOwner.ok === true) {
+                setPathImage('');
+                setImage(`/uploads/${dataOwner.cedula}.png`);
+            }*/
         }
 
     }, [dataOwner, searchDataOwner]);
@@ -135,11 +141,13 @@ export const FormOwner = () => {
             dispatch(create_owner(form));
             if(file?.size > 0) {
                 dispatch(upload_imgs_owner(upload, file));
+                setImage('');
             }
         } else {
             dispatch(update_owner(form));
             if(file?.size > 0) {
                 dispatch(update_imgs_owner(upload, file));
+                setImage('');
             }
             toast.success('Propietario actualizado con éxito');
         }
@@ -169,7 +177,6 @@ export const FormOwner = () => {
     }, [validateDataOwner, dataOwner, verifyCedula, form.cedula, form.email, verifyEmail]);
     //#endregion
 
-    
     //Verificar actualización del propietario
     const verifyUpdate = useSelector(state => state.propietario.verifyUpdateOwner);
 
@@ -177,7 +184,7 @@ export const FormOwner = () => {
         if(verifyUpdate.ok === true) {
             setLoading(false);
         }
-    }, [verifyUpdate])
+    }, [verifyUpdate, pathImage])
 
 
     //Cargar imagen del propietario
@@ -192,15 +199,31 @@ export const FormOwner = () => {
                 render.readAsDataURL(file);
 
                 render.onload = () => {
+                    setImage('');
                     setPathImage(render.result);
                 }
-
+                
                 setFile(file);
 
             } else {
                 toast.warning('Debe seleccionar una imagen');
             }
         }
+    }
+
+    //Verificamos si se actualiza la imagen
+    const verifyUpdateImg = useSelector(state => state.propietario.upload);
+
+    useEffect(() => {
+        if(verifyUpdateImg.length > 0 ) {
+            setPathImage('');
+            setImage(`/uploads/${dataOwner.cedula}.png`);
+            console.log(image);
+        } 
+    }, [verifyUpdateImg]);
+
+    const myLoader = () =>  {
+        return image;
     }
 
     return(
@@ -317,14 +340,8 @@ export const FormOwner = () => {
                     <p className="">Fotografía</p>
                     <br />
                     {
-                        pathImage !== ''? 
-                        <Image
-                            src={pathImage}
-                            alt="Perfil author"
-                            width={150}
-                            height={150}
-                            className="object-contain"
-                        /> 
+                        pathImage !== '' || image !== '' ? 
+                        <ImageLoading url={pathImage !== '' ? pathImage : image } />
                     : <FontAwesomeIcon icon={faUser} className="h-32 text-zinc-400" /> 
                     }
                     

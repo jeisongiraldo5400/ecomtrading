@@ -27,7 +27,7 @@ export const propietarioSlice = createSlice({
         },
         uploadImgs(state, action) {
             state.upload = action.payload;
-        }
+        },
     }
 });
 
