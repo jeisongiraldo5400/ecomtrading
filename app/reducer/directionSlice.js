@@ -5,6 +5,7 @@ const initialState = {
     departments: [],
     municipies: [],
     verifyCreateDirection: [],
+    updateDirection: [],
 }
 
 export const directionSlice = createSlice({
@@ -19,11 +20,15 @@ export const directionSlice = createSlice({
         }, 
         createDirection: (state, action) => {
             state.verifyCreateDirection = action.payload;
+        },
+        updateDirection: (state, action) => {
+            state.updateDirection = action.payload;
         }
+
     }
 });
 
-export const { getAllDepartments, getAllMunicipies, createDirection } = directionSlice.actions;
+export const { getAllDepartments, getAllMunicipies, createDirection, updateDirection } = directionSlice.actions;
 export default directionSlice.reducer;
 
 

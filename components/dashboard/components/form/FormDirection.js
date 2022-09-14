@@ -5,9 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 //Components
 import { Button } from "../Button"
+import { Spinner } from '../spinner';
+
+
+//Actions
+import { saveDataDirection } from '../../../../app/reducer/dataOwner';
 
 //Http
-import { get_all_departments, get_all_municipies, search_all_data_owner } from '../../../../lib/http';
+import { get_all_departments, get_all_municipies, search_all_data_owner, create_direcction, update_direction } from '../../../../lib/http';
+
 
 export const FormDirection = () => {
 
@@ -19,6 +25,7 @@ export const FormDirection = () => {
 
 
     // States
+    const [loading, setLoading] = useState(false);
     const [nameDepartments, setNameDepartments] = useState('');
     const [codigoDepartments, setCodigoDepartments] = useState('');
     const [nameMunicipies, setNameMunicipies] = useState('');
@@ -27,10 +34,32 @@ export const FormDirection = () => {
     const [idPropietario, setIdPropietario] = useState('');
     const [message, setMessage] = useState('');
     const [isActiveButton, setIsActiveButton] = useState(false);
+    const [update, setIsUpdate] = useState(false);
 
     //Recibimos los departamentos y municipios
     const departments = useSelector(state => state.direction.departments);
     const municipies = useSelector(state => state.direction.municipies);
+
+    //Cargar datos de dirección si ya esta registrado en la base de datos
+    const dataDirection = useSelector(state => state.dataOwner.getSaveDataDirection);
+
+    useEffect(() => {
+
+        if(Object.entries(dataDirection).length > 0) {
+
+            const nameDepartments = departments.find(d => d.id_departamento === dataDirection.departamento_id)?.nombre;
+            setNameDepartments(nameDepartments);
+            const nameMunicipies = municipies.find(m => m.id_municipio === dataDirection.municipio_id)?.nombre;
+            setNameMunicipies(nameMunicipies);
+
+            setCodigoDepartments(dataDirection.departamento_id);
+            setCodigoMunicipies(dataDirection.municipio_id);
+            setDirection(dataDirection.direccion);
+            setIdPropietario(dataDirection.propietario_id);
+            setIsUpdate(true);
+        }
+
+    }, [ dataDirection ]);
 
     //Cargar datos del propietario registrado
     const dataOwner = useSelector(state => state.dataOwner.getSaveDataOwner);
@@ -38,8 +67,6 @@ export const FormDirection = () => {
     useEffect(() => {
 
         if(Object.entries(dataOwner).length > 0){
-
-            console.log(dataOwner.cedula);
 
             let data = {
                 cedula: dataOwner.cedula
@@ -54,6 +81,9 @@ export const FormDirection = () => {
     const handlerDirecction = (e) => {
         e.preventDefault();
 
+        setLoading(true);
+        setIsActiveButton(true);
+
         let data = {
             direccion: direction,
             departamento_id: codigoDepartments,
@@ -61,7 +91,14 @@ export const FormDirection = () => {
             propietario_id: idPropietario
         }
 
-        console.log(data);
+        if(update === false) {
+            dispatch(create_direcction(data));
+        } else {
+            dispatch(update_direction(data));
+        }
+
+        dispatch(saveDataDirection(data));
+        
 
     }
 
@@ -103,8 +140,6 @@ export const FormDirection = () => {
     //Treamos los datos del propietario desde la bd
     const searchDataOwner = useSelector(state => state.dataOwner.dataOwners);
 
-    console.log(searchDataOwner)
-
     useEffect(() => {
 
         if(searchDataOwner.ok === true) {
@@ -117,6 +152,29 @@ export const FormDirection = () => {
         }
 
     }, [searchDataOwner]);
+
+
+    //Verificar si se creo la dirección
+    const verifyCreateDirection = useSelector(state => state.direction.verifyCreateDirection);
+
+    useEffect(() => {
+
+        if(verifyCreateDirection.ok === true) {
+            setLoading(false);
+            setIsActiveButton(false);
+        }
+
+    }, [verifyCreateDirection]);
+
+    //Verificar si se actualizo la dirección
+    const verifyUpdateDirection = useSelector(state => state.direction.updateDirection);
+    
+    useEffect(() => {
+        if(verifyUpdateDirection.ok === true) {
+            setLoading(false);
+            setIsActiveButton(false);
+        }
+    }, [verifyUpdateDirection]);
 
     return (
         <form className="bg-green-500 max-w-sm p-4 mt-4 text-green-100 rounded" onSubmit={handlerDirecction}>
@@ -182,6 +240,10 @@ export const FormDirection = () => {
                 </select>
 
             <Button name='Guardar dirección' color='green-500' state={isActiveButton}  />
+
+            <div className="mt-5">
+                <Spinner state={loading}/>
+            </div>
 
         </form>
     )
