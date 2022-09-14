@@ -34,19 +34,16 @@ export default async (req, res) =>{
 
             let name = files.media.newFilename
             let originalName = files.media.originalFilename;
-            
-            //cambiamos el nombre a la imagen
             fs.renameSync(`./public/uploads/${name}`, `./public/uploads/${originalName}.png`);
 
             let nameImg = `${originalName}.png`;
 
             //Registramos el nombre de la imagen del propietario
             let cedula_propietario = originalName.split('.')[0];
-            pool.query(`INSERT INTO uploads 
-            (cedula_propietario, img) 
-                VALUES 
-                ($1, $2)`,
-                [cedula_propietario, nameImg])
+            pool.query(`UPDATE uploads 
+            SET img = $1
+            WHERE cedula_propietario = $2`,
+                [nameImg, cedula_propietario])
                 .then((response) => {
                         resolve(response);
                 }).catch(err => {

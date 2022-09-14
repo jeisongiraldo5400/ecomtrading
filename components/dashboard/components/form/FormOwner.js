@@ -15,11 +15,10 @@ import { Button } from "../Button";
 import { Spinner } from '../spinner';
 
 //Http
-import { create_owner, validate_data, update_owner } from '../../../../lib/http';
+import { create_owner, validate_data, update_owner, upload_imgs_owner, update_imgs_owner } from '../../../../lib/http';
 
 //Actions
 import { saveDataOwner } from '../../../../app/reducer/dataOwner';
-import { SERVER_FILES_MANIFEST } from 'next/dist/shared/lib/constants';
 
 export const FormOwner = () => {
 
@@ -58,7 +57,7 @@ export const FormOwner = () => {
                 apellidos: dataOwner.apellidos,
                 telefono: dataOwner.telefono,
                 edad: dataOwner.edad,
-                email: dataOwner.email,
+                email: dataOwner.email
             });
 
             setUpdate(true);
@@ -114,12 +113,22 @@ export const FormOwner = () => {
         setIsActiveButton(true);
         setLoading(true);
 
+        let upload = {
+            cedula_propietario: '1081417919',
+        }
+
         if(update === false) {
             //Registrar el propietario
             toast.success('Propietario creado con éxito');
             dispatch(create_owner(form));
+            if(file?.size > 0) {
+                dispatch(upload_imgs_owner(upload, file));
+            }
         } else {
             dispatch(update_owner(form));
+            if(file?.size > 0) {
+                dispatch(update_imgs_owner(upload, file));
+            }
             toast.success('Propietario actualizado con éxito');
         }
 
@@ -177,6 +186,7 @@ export const FormOwner = () => {
                 }
 
                 setFile(file);
+
             } else {
                 toast.warning('Debe seleccionar una imagen');
             }
@@ -271,7 +281,6 @@ export const FormOwner = () => {
                 id="image" 
                 placeholder="image"
                 onChange={onFileChange}
-                required
                 disabled={message?.ok == true ? true : false}
                 className="
                 block w-full text-sm text-slate-500
