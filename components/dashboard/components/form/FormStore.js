@@ -43,8 +43,23 @@ export const FormStore = () => {
         telefono: '',
         nombre: '',
         nit: '',
-        cuenta_bancaria: ''
     });
+
+    //Traemos los datos bancarios del propietario desde la bd
+    const dataBackAccount = useSelector(state => state.getData.searchAccountBank);
+
+        useEffect(() => {
+
+            if(dataBackAccount.length > 0) {
+                console.log(dataBackAccount);
+            } else {
+                setIsActiveButton(true);
+                setMessageBank('No se encontraron datos bancarios');
+                
+            }
+
+        }, [dataBackAccount]);
+
 
     //Traer los tipos de productos de la bd
     const products = useSelector(state => state.getData.productsType);
@@ -54,6 +69,33 @@ export const FormStore = () => {
         const codeProduct = products.find(p => p.nombre === e.target.value)?.id_tipo_producto;
         setCodeProduct(codeProduct);
     }
+
+     //Cargar datos en formulario, cuando un almacen esta recien registrado
+    const dataStore = useSelector(state => state.dataOwner.getSaveDataStore);
+
+    useEffect(() => {
+
+        if(Object.entries(dataStore).length > 0 ) {
+
+            const nameTipoProducto = products.find(p => p.id_tipo_producto === dataStore.tipo_producto_id)?.nombre;
+            setNameProduct(nameTipoProducto);
+            setCodeProduct(dataStore.tipo_producto_id);
+
+            const nameBank = dataBackAccount.find(b => b.id_cuenta_bancaria === dataStore.cuenta_bancaria_id)?.numero_cuenta;
+            setNameAccountType(nameBank);
+            setCodeAccountType(dataStore.cuenta_bancaria_id);
+            
+            setForm({
+                cantidad: dataStore.cantidad,
+                telefono: dataStore.telefono,
+                nombre: dataStore.nombre,
+                nit: dataStore.nit,
+            });
+
+            setIsUpdate(true);
+        }
+
+    }, [dataStore]);
 
     //Handler
     const handlerStore = (e) => {
@@ -72,6 +114,7 @@ export const FormStore = () => {
         if(isUpdate === false) {
             //registrar almacen
             toast.success('Almacén registrado correctamente');
+            console.log(data);
         } else {
             //actualizar almacen
             toast.success('Almacén actualizado correctamente');
@@ -132,21 +175,6 @@ export const FormStore = () => {
         }
     }, [validateNit]);
 
-
-    //Traemos los datos bancarios del propietario desde la bd
-    const dataBackAccount = useSelector(state => state.getData.searchAccountBank);
-
-    useEffect(() => {
-
-        if(dataBackAccount.length > 0) {
-            console.log(dataBackAccount);
-        } else {
-            setIsActiveButton(true);
-            setMessageBank('No se encontraron datos bancarios');
-            
-        }
-
-    }, [dataBackAccount]);
 
     const handleAccountType = (e) => {
         setNameAccountType(e.target.value);
