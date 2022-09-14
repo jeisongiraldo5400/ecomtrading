@@ -9,9 +9,10 @@ import { useSelector, useDispatch } from 'react-redux';
 
 //Components
 import { Button } from "../Button";
+import { Spinner } from '../spinner';
 
 //http
-import { get_all_product_type, search_bank_account, validate_data } from '../../../../lib/http';
+import { get_all_product_type, search_bank_account, validate_data, create_store, update_store } from '../../../../lib/http';
 
 //Actions
 import { saveDataStore } from '../../../../app/reducer/dataOwner';
@@ -25,11 +26,12 @@ export const FormStore = () => {
     }, [])
 
     //states 
+    const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [messageNit, setMessagNit] = useState('');
     const [messageBank, setMessageBank] = useState('');
     const [idPropietario, setIdPropietario] = useState('');
-    const [isActiveButton, setIsActiveButton] = useState(false);
+    const [isActiveButton, setIsActiveButton] = useState(true);
     const [isUpdate, setIsUpdate] = useState(false);
 
     const [nameProduct, setNameProduct] = useState('');
@@ -101,6 +103,9 @@ export const FormStore = () => {
     const handlerStore = (e) => {
         e.preventDefault();
 
+        setLoading(true);
+        setIsActiveButton(true);
+
         let data = {
             propietario_id: idPropietario,
             tipo_producto_id: codeProduct,
@@ -114,13 +119,12 @@ export const FormStore = () => {
         if(isUpdate === false) {
             //registrar almacen
             toast.success('Almacén registrado correctamente');
-            console.log(data);
+            dispatch(create_store(data));
         } else {
             //actualizar almacen
             toast.success('Almacén actualizado correctamente');
         }
 
-        console.log(data);
         dispatch(saveDataStore(data));
     }
 
@@ -160,16 +164,16 @@ export const FormStore = () => {
             setIsActiveButton(true);
         }
 
-    }, [searchDataOwner]);
+    }, [ searchDataOwner ]);
 
      // Validamos si ya existe un nit registrado
     const validateNit = useSelector(state => state.propietario.validateData);
 
     useEffect(() => {
-        if(validateNit.ok) {
+        if(validateNit.ok === true) {
             setMessagNit(validateDataOwner);
             setIsActiveButton(true);
-        } else {
+        } else if(validateNit.ok === false) {
             setMessagNit('');
             setIsActiveButton(false);
         }
@@ -181,6 +185,16 @@ export const FormStore = () => {
         const codeAccountType = dataBackAccount.find(p => p.numero_cuenta === e.target.value)?.id_cuenta_bancaria;
         setCodeAccountType(codeAccountType);
     }
+
+    //Verificamos si se creo el almacen 
+    const verifyDataStore = useSelector(state => state.dataStore.dataStore);
+
+    useEffect(() => {
+        if(verifyDataStore.ok == true) {
+            setLoading(false);
+            setIsActiveButton(true);
+        }
+    }, [verifyDataStore]);
 
 
     return (
@@ -290,6 +304,10 @@ export const FormStore = () => {
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
             <Button name='Guardar Almacén' color='green-500' state={isActiveButton} />
+
+            <div className="mt-5">
+                <Spinner state={loading}/>
+            </div>
 
             <ToastContainer />
 
