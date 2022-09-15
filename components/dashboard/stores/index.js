@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 
+import { useRouter } from 'next/router'
+
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 
 //import Http
-import {  get_all_stores, delete_store } from  '../../../lib/http';
-
-//actions
-import { deleteStore } from '../../../app/reducer/storeSlice';
+import {  get_all_stores, delete_store, get_all_data_owner_ecom } from  '../../../lib/http';
 
 //Toast-Notification
 import { ToastContainer, toast } from 'react-toastify';
@@ -18,7 +17,8 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 
 
 export default function Stores(){
-
+    
+    const router = useRouter();
     const dispatch = useDispatch();
 
     //Datos de todos los almacenes
@@ -37,6 +37,16 @@ export default function Stores(){
         }
         dispatch(delete_store(data));
         toast.success('Almacén eliminado');
+    }
+
+
+    //Seleccionar toda la información del propietario
+    const selectOwner = (e) => {
+        let data = {
+            cedula: e
+        };
+        dispatch(get_all_data_owner_ecom(data));
+        router.push('/admin?view=registerOwner');
     }
 
 
@@ -60,7 +70,7 @@ export default function Stores(){
             <td className="border border-slate-300 p-1">{store.nombre_propietario} {store.apellidos}</td>
             <td className="border border-slate-300 p-1">{store.email}</td>
             <td colspan={2} className="sidebar_inline_link border border-slate-300">
-                <a className="text-green-400 cursor-pointer p-1"><FaEdit /></a>
+                <a className="text-green-400 cursor-pointer p-1" onClick={() => selectOwner(store.cedula) }><FaEdit /></a>
                 <a className="text-red-400 cursor-pointer p-1" onClick={() => deleteStore(store.id_almacen)}><FaTrash /></a>
             </td>
         </tr>

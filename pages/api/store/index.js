@@ -55,9 +55,8 @@ const createStore = async (req, res) => {
 
 const updateStore = async(req, res) => {
     try{
-        const { id } = req.query;
+
         const {
-            propietario_id,
             tipo_producto_id,
             cantidad,
             telefono,
@@ -66,23 +65,20 @@ const updateStore = async(req, res) => {
             cuenta_bancaria_id
         } = req.body;
 
-        await pool.query(`UPDATE almacen 
-        SET propietario_id = $1, 
-            tipo_producto_id = $2, 
-            cantidad = $3, 
-            telefono = $4, 
-            nombre = $5, 
-            nit = $6, 
-            cuenta_bancaria_id = $7
-        WHERE id_almacen = $8`, [
-            propietario_id,
+        await pool.query(`update almacen 
+            set tipo_producto_id = $1, 
+                cantidad = $2, 
+                telefono = $3, 
+                nombre = $4, 
+                nit = $5, 
+                cuenta_bancaria_id = $6
+            where nit = '${nit}'`, [
             tipo_producto_id,
             cantidad,
             telefono,
             nombre,
             nit,
-            cuenta_bancaria_id,
-            id
+            cuenta_bancaria_id
         ]
         );
 

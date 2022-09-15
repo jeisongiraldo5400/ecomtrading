@@ -98,6 +98,7 @@ export const FormStore = () => {
                 setIsUpdate(false);
             } else {
                 setIsUpdate(true);
+                setIsActiveButton(false);
             }
         }
 
@@ -126,6 +127,7 @@ export const FormStore = () => {
             dispatch(create_store(data));
         } else {
             //actualizar almacen
+            dispatch(update_store(data));
             toast.success('Almacén actualizado correctamente');
         }
 
@@ -181,7 +183,7 @@ export const FormStore = () => {
             setMessagNit('');
             setIsActiveButton(false);
         }
-    }, [validateNit]);
+    }, [ validateNit ]);
 
 
     const handleAccountType = (e) => {
@@ -193,10 +195,14 @@ export const FormStore = () => {
     //Verificamos si se creo el almacen 
     const verifyDataStore = useSelector(state => state.dataStore.dataStore);
 
+    console.log(verifyDataStore);
+
     useEffect(() => {
         if(verifyDataStore.ok == true) {
             setLoading(false);
             setIsActiveButton(true);
+        }else {
+            setLoading(false);
         }
     }, [verifyDataStore]);
 
@@ -232,6 +238,7 @@ export const FormStore = () => {
                 required
                 value={form.nit}
                 onChange={handleChange}
+                disabled={isUpdate == true ? true : true}
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
             { messageNit?.tipo === 'nit' ? <label className="block p-2 bg-red-500 mt-2 rounded-md mb-2">{ messageNit.message }</label> : ''}
@@ -307,7 +314,7 @@ export const FormStore = () => {
                 onChange={handleChange}
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
-            <Button name='Guardar Almacén' color='green-500' state={isActiveButton} />
+            <Button name='Guardar Almacén' color='green-500' />
 
             <div className="mt-5">
                 <Spinner state={loading}/>

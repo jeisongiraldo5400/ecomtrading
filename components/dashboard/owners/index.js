@@ -66,8 +66,8 @@ export default function Owners() {
         router.push('/admin?view=registerOwner');
     }
 
+    //Vacio los estados que cargarn los formularios
     const registerOwner = () => {
-        //Vacio los estados que cargarn los formularios
         dispatch(dataOwnerEcom());
         dispatch(saveDataOwner());
         dispatch(saveDataDirection())
