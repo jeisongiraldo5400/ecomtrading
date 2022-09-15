@@ -238,7 +238,7 @@ export const FormStore = () => {
                 required
                 value={form.nit}
                 onChange={handleChange}
-                disabled={isUpdate == true ? true : true}
+                disabled={isUpdate == true ? true : false}
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
             { messageNit?.tipo === 'nit' ? <label className="block p-2 bg-red-500 mt-2 rounded-md mb-2">{ messageNit.message }</label> : ''}
