@@ -16,14 +16,15 @@ export default async function Store(req, res) {
 const getAllDataStore = async(req, res) => {
     try{
         const { rows } = await pool.query(`select a.id_almacen,
-        a.cantidad,
-        a.telefono,
-        a.nombre,
-        a.nit,
-        concat(p.nombres, ' ', p.apellidos) as nombre_propietario,
-        p.email
-    from almacen a
-    inner join propietario p on p.id_propietario = a.propietario_id`);
+            a.cantidad,
+            a.telefono,
+            a.nombre,
+            a.nit,
+            concat(p.nombres, ' ', p.apellidos) as nombre_propietario,
+            p.email
+        from almacen a
+        inner join propietario p on p.id_propietario = a.propietario_id
+        where p.estado = 1 and a.estado = 1`);
         return res.status(200).json(rows);
     }
     catch(err) {

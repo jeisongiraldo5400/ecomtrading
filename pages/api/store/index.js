@@ -1,6 +1,5 @@
 import pool from '../../../config/db';
 
-
 export default async function Store(req, res) {
     
         switch(req.method) {

@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 
 //import Http
-import {  get_all_stores } from  '../../../lib/http';
+import {  get_all_stores, delete_store } from  '../../../lib/http';
+
+//actions
+import { deleteStore } from '../../../app/reducer/storeSlice';
+
+//Toast-Notification
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //icons
 import { FaEdit, FaTrash } from 'react-icons/fa';
@@ -17,12 +24,31 @@ export default function Stores(){
     //Datos de todos los almacenes
     const dataStores = useSelector(state => state.dataStore.getAllDataStore);
 
-    console.log(dataStores);
-
-
     useEffect(() => {
         dispatch(get_all_stores());
     },[])
+
+
+    //Se pasa el estado del almacen a 0 
+    const deleteStore = (e) => {
+
+        let data = {
+            id: e
+        }
+        dispatch(delete_store(data));
+        toast.success('Almacén eliminado');
+    }
+
+
+    const verifyDeleteData = useSelector(state => state.dataStore.deteleStore);
+
+    useEffect(() => {
+
+        if(verifyDeleteData.length > 0){
+            dispatch(get_all_stores());
+        }
+
+    }, [verifyDeleteData]);
 
 
     const tableStore = dataStores.map((store, index) => (
@@ -33,9 +59,9 @@ export default function Stores(){
             <td className="border border-slate-300 p-1">{store.cantidad}</td>
             <td className="border border-slate-300 p-1">{store.nombre_propietario} {store.apellidos}</td>
             <td className="border border-slate-300 p-1">{store.email}</td>
-            <td colspan={2} className="sidebar_inline_link border border-slate-100">
+            <td colspan={2} className="sidebar_inline_link border border-slate-300">
                 <a className="text-green-400 cursor-pointer p-1"><FaEdit /></a>
-                <a className="text-red-400 cursor-pointer p-1"><FaTrash /></a>
+                <a className="text-red-400 cursor-pointer p-1" onClick={() => deleteStore(store.id_almacen)}><FaTrash /></a>
             </td>
         </tr>
     ))
@@ -61,6 +87,8 @@ export default function Stores(){
                     { tableStore }
                 </tbody>
             </table>
+
+            <ToastContainer />
 
         </div>
     )

@@ -5,7 +5,8 @@ const initialState = {
     dataStore: [],
     updateStore: [],
     getDataStore: [],
-    getAllDataStore: []
+    getAllDataStore: [],
+    deteleStore: [],
 }
 
 export const storeSlice = createSlice({
@@ -23,11 +24,14 @@ export const storeSlice = createSlice({
         },
         getAllDataStores(state, action){
             state.getAllDataStore = action.payload;
+        },
+        deleteStore(state, action){
+            state.deteleStore = action.payload;
         }
     }
 });
 
 
-export const { createStore, updateStore, getDataStore, getAllDataStores } = storeSlice.actions;
+export const { createStore, updateStore, getDataStore, getAllDataStores, deleteStore } = storeSlice.actions;
 
 export default storeSlice.reducer

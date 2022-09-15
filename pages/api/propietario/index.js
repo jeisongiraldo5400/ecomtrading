@@ -125,9 +125,6 @@ const deleteOwner = async (req, res) => {
         const { cedula } = req.body;
 
         const estado = 0;
-
-        console.log(cedula);
-
         await pool.query(`UPDATE propietario
             SET estado = $1
             WHERE 
