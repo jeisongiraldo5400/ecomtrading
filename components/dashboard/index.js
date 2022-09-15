@@ -2,6 +2,7 @@
 import Home from './home';
 import Owner from './owners';
 import Stores from './stores';
+import RegisterData from './RegisterData';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function Index({ view }) {
@@ -23,6 +24,8 @@ const views = (view) => {
             return <Owner />;
         case 'Stores':
             return <Stores />;
+        case 'registerOwner':
+            return <RegisterData />;
         default: return <Home />;
     }
 }
