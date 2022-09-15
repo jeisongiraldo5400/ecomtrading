@@ -20,7 +20,7 @@ export default function Login() {
                     />
                 </div>
                 <div className="mt-10 mb-28 bg-zinc-200 rounded p-10 border-2 border-right-solid border-green-600">
-                    <h1 class="text-3xl pb-12 text-bold text-green-700 text-center">ECOMTRADING</h1>
+                    <h1 className="text-3xl pb-12 text-bold text-green-700 text-center">ECOMTRADING</h1>
                     <label className="block text-sx font-bold mb-4">Iniciar sesión</label>
                     <label htmlFor="email" className="block text-sx font-bold mb-2 text-gray-500">Correo eléctronico</label>
                     <input 

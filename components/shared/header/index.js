@@ -1,6 +1,6 @@
 
 
-export const Header = () => {
+export default function Header(){
     return(
         <header className="bg-green-500 text-white p-3">
             <a className="text-base text-4xl">Dashboard</a>

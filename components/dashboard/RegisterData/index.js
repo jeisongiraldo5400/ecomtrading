@@ -13,7 +13,7 @@ import { FormDirection } from '../components/form/FormDirection';
 import { FormStore } from '../components/form/FormStore';
 import { FormBank } from '../components/form/FormBank';
 
-export const RegisterData = () => {
+export default function RegisterData(){
 
     const dispatch = useDispatch();
 
