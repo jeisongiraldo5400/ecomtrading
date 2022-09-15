@@ -9,6 +9,9 @@ import { useDispatch, useSelector} from 'react-redux';
 //http
 import { get_all_owners } from '../../../lib/http';
 
+//icons
+import { FaEdit, FaTrash } from 'react-icons/fa';
+
 
 export default function Owners() {
 
@@ -26,35 +29,36 @@ export default function Owners() {
 
     const tableOwners = dataAllOwners.map((owner, index) => (
         <tr key={index}>
-            <td>{owner.cedula}</td>
-            <td>{owner.nombres}</td>
-            <td>{owner.apellidos}</td>
-            <td>{owner.edad}</td>
-            <td>{owner.telefono}</td>
-            <td>{owner.email}</td>
-            <td colSpan={2}>
-                <a>Editar</a>
-                <a>Eliminar</a>
+            <td className="border border-slate-300">{owner.cedula}</td>
+            <td className="border border-slate-300">{owner.nombres}</td>
+            <td className="border border-slate-300">{owner.apellidos}</td>
+            <td className="border border-slate-300">{owner.edad}</td>
+            <td className="border border-slate-300">{owner.telefono}</td>
+            <td className="border border-slate-300">{owner.email}</td>
+            <td colSpan={2} className="sidebar_inline_link border border-slate-300 m-1" >
+                <a className="text-green-400 cursor-pointer"><FaEdit /></a>
+                <a className="text-red-400 cursor-pointer"><FaTrash /></a>
             </td>
         </tr>
     ))
 
     return(
-        <div>
+        <div className="bg-zinc-100 p-10 rounded-[10px]">
             <Link href="admin?view=registerOwner">
-                <a class="bg-green-700 py-2 px-4 text-white rounded-[10px]">Registrar propietario</a>
+                <a className="bg-green-700 py-2 px-4 mb-5 text-white rounded-[10px]">Registrar propietario</a>
             </Link>
 
-            <table>
-                <thead>
+            <p className="mt-10 text-2xl text-slate-700">#{dataAllOwners.length} Propietarios</p>
+            <table className="table-auto border-1 mt-3 mb-10 rounded-[10px] text-center">
+                <thead className="bg-zinc-300 text-gray-500 rounded-sm">
                     <tr>
-                        <th>Cédula</th>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
-                        <th>Edad</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                        <th>Acciones</th>
+                        <th className="border border-slate-100 px-1">Cédula</th>
+                        <th className="border border-slate-100 px-1">Nombres</th>
+                        <th className="border border-slate-100 px-1">Apellidos</th>
+                        <th className="border border-slate-100 px-1">Edad</th>
+                        <th className="border border-slate-100 px-1">Teléfono</th>
+                        <th className="border border-slate-100 px-1">Email</th>
+                        <th className="border border-slate-100 px-1">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
