@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useDispatch, useSelector} from 'react-redux';
 
 //http
-import { get_all_owners } from '../../../lib/http';
+import { get_all_owners, delete_owner } from '../../../lib/http';
 
 //Actions
 import { deleteOwner } from '../../../app/reducer/propietarioSlice';
@@ -36,12 +36,21 @@ export default function Owners() {
     //Verificamos si se elimino el owner
     const verifyDeleteData = useSelector(state => state.propietario.deleteOwner);
     useEffect(() => {
-        
+        if(verifyDeleteData.length > 0) {
+            dispatch(get_all_owners());
+            dispatch(deleteOwner([]));
+            console.log('eliminado');
+        }
     }, [verifyDeleteData]);
 
 
-    const deleteData = (data) => {
-        console.log(data);
+    //Solo se coloca el estado del propietario en 0
+    const deleteData = (e) => {
+        toast.success('Propietario eliminado');
+        let data = {
+            cedula: e
+        }
+        dispatch(delete_owner(data));
     }
 
     const tableOwners = dataAllOwners.map((owner, index) => (
@@ -56,7 +65,7 @@ export default function Owners() {
             <td className="border border-slate-300">{owner.email}</td>
             <td colSpan={2} className="sidebar_inline_link border border-slate-300 m-1" >
                 <a className="text-green-400 cursor-pointer"><FaEdit /></a>
-                <a className="text-red-400 cursor-pointer" onClick={deleteData(owner.cedula)}><FaTrash /></a>
+                <a className="text-red-400 cursor-pointer" onClick={() => deleteData(owner.cedula)}><FaTrash /></a>
             </td>
         </tr>
     ))

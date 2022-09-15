@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 //Redux
-import { useSelector, useDispatch } from 'react-redux';
-
-//icons
-import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch } from 'react-redux';
 
 //Form
 import { FormOwner } from '../components/form/FormOwner';

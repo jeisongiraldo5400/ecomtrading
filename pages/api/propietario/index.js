@@ -9,7 +9,7 @@ export default async function Owner(req, res) {
             return createOwner(req, res);
         case 'PUT':
             return updateOwner(req, res);
-        case 'DELETE':
+        case 'PATCH':
             return deleteOwner(req, res);
         default: return res.status(405).end();
     }
@@ -126,7 +126,9 @@ const deleteOwner = async (req, res) => {
 
         const estado = 0;
 
-        await pool.query(`UPDATE FROM propietario
+        console.log(cedula);
+
+        await pool.query(`UPDATE propietario
             SET estado = $1
             WHERE 
             cedula = $2`,[ estado, cedula ]);
