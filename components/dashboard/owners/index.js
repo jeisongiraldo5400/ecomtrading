@@ -34,6 +34,8 @@ export default function Owners() {
             <td className="border border-slate-300">{owner.apellidos}</td>
             <td className="border border-slate-300">{owner.edad}</td>
             <td className="border border-slate-300">{owner.telefono}</td>
+            <td className="border border-slate-300">{owner.direccion}</td>
+            <td className="border border-slate-300">{owner.numero_cuenta}</td>
             <td className="border border-slate-300">{owner.email}</td>
             <td colSpan={2} className="sidebar_inline_link border border-slate-300 m-1" >
                 <a className="text-green-400 cursor-pointer"><FaEdit /></a>
@@ -57,6 +59,8 @@ export default function Owners() {
                         <th className="border border-slate-100 px-1">Apellidos</th>
                         <th className="border border-slate-100 px-1">Edad</th>
                         <th className="border border-slate-100 px-1">Teléfono</th>
+                        <th className="border border-slate-100 px-1">Dirección</th>
+                        <th className="border border-slate-100 px-1"># Cuenta Bancaria</th>
                         <th className="border border-slate-100 px-1">Email</th>
                         <th className="border border-slate-100 px-1">Acciones</th>
                     </tr>

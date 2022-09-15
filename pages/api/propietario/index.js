@@ -15,7 +15,18 @@ export default async function Owner(req, res) {
 
 const getAllOwners = async (req, res) => {
     try{
-        const { rows } = await pool.query('SELECT * FROM propietario');
+        const { rows } = await pool.query(`select  
+            p.email,
+            p.apellidos,
+            p.nombres,
+            p.cedula,
+            p.edad,
+            p.telefono,
+            d.direccion,
+            cb.numero_cuenta
+        from propietario p
+        inner join direccion d on p.id_propietario = d.propietario_id
+        inner join cuenta_bancaria cb on p.id_propietario = cb.propietario_id`);
         return res.status(200).json(rows);
     }
     catch(err) {
