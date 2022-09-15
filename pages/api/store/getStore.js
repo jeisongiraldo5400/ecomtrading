@@ -21,7 +21,8 @@ const getAllDataStore = async(req, res) => {
             a.nombre,
             a.nit,
             concat(p.nombres, ' ', p.apellidos) as nombre_propietario,
-            p.email
+            p.email,
+            p.cedula
         from almacen a
         inner join propietario p on p.id_propietario = a.propietario_id
         where p.estado = 1 and a.estado = 1`);

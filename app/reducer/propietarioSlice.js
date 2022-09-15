@@ -8,6 +8,7 @@ const initialState = {
     verifyUpdateOwner: [],
     upload: [],
     deleteOwner: [],
+    getAllDataOwnerEcom: []
 }
 
 export const propietarioSlice = createSlice({
@@ -31,10 +32,13 @@ export const propietarioSlice = createSlice({
         },
         deleteOwner(state, action) {
             state.deleteOwner = action.payload;
+        },
+        dataOwnerEcom(state, action) {
+            state.getAllDataOwnerEcom = action.payload;
         }
     }
 });
 
-export const { getAllOwners, validateData, verifyCreationOwner, updateOwner, uploadImgs, deleteOwner } = propietarioSlice.actions;
+export const { getAllOwners, validateData, verifyCreationOwner, updateOwner, uploadImgs, deleteOwner, dataOwnerEcom } = propietarioSlice.actions;
 
 export default propietarioSlice.reducer;

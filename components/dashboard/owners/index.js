@@ -1,5 +1,7 @@
 import React, { useEffect, usState } from 'react';
 
+import { useRouter } from 'next/router'
+
 //Link
 import Link from 'next/link';
 
@@ -7,7 +9,7 @@ import Link from 'next/link';
 import { useDispatch, useSelector} from 'react-redux';
 
 //http
-import { get_all_owners, delete_owner } from '../../../lib/http';
+import { get_all_owners, delete_owner, get_all_data_owner_ecom } from '../../../lib/http';
 
 //Actions
 import { deleteOwner } from '../../../app/reducer/propietarioSlice';
@@ -22,6 +24,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function Owners() {
 
+    const router = useRouter();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -49,8 +52,18 @@ export default function Owners() {
         toast.success('Propietario eliminado');
         let data = {
             cedula: e
-        }
+        };
         dispatch(delete_owner(data));
+    }
+
+
+    //Seleccionar toda la información del propietario
+    const selectOwner = (e) => {
+        let data = {
+            cedula: e
+        };
+        dispatch(get_all_data_owner_ecom(data));
+        router.push('/admin?view=registerOwner');
     }
 
     const tableOwners = dataAllOwners.map((owner, index) => (
@@ -64,8 +77,8 @@ export default function Owners() {
             <td className="border border-slate-300">{owner.numero_cuenta == 0 ? 'No tiene cuenta bancaria': owner.numero_cuenta }</td>
             <td className="border border-slate-300">{owner.email}</td>
             <td colSpan={2} className="sidebar_inline_link border border-slate-300 m-1" >
-                <a className="text-green-400 cursor-pointer"><FaEdit /></a>
-                <a className="text-red-400 cursor-pointer" onClick={() => deleteData(owner.cedula)}><FaTrash /></a>
+                <a className="text-green-400 cursor-pointer" onClick={() => selectOwner(owner.cedula) }><FaEdit /></a>
+                <a className="text-red-400 cursor-pointer" onClick={() => deleteData(owner.cedula) }><FaTrash /></a>
             </td>
         </tr>
     ))

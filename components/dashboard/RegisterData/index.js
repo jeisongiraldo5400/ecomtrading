@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
 //Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 //Form
 import { FormOwner } from '../components/form/FormOwner';
 import { FormDirection } from '../components/form/FormDirection';
 import { FormStore } from '../components/form/FormStore';
 import { FormBank } from '../components/form/FormBank';
+
+
+//Actions
+import {
+    saveDataOwner,
+    saveDataDirection,
+    saveDataBank,
+    saveDataStore }
+from '../../../app/reducer/dataOwner';
 
 export default function RegisterData(){
 
@@ -48,6 +57,30 @@ export default function RegisterData(){
         setFormStore(false);
         setFormBank(true);    
     }
+
+    //DATA DE ACUTALIZACIÓN DEL USUARIO
+    const ALLDATA = useSelector(state => state.propietario.getAllDataOwnerEcom);
+
+    console.log(ALLDATA);
+
+    useEffect(() => {
+
+        if(ALLDATA?.cedula !== '') {
+            let dataOwner = {
+                cedula: ALLDATA.cedula,
+                nombres: ALLDATA.nombres,
+                apellidos: ALLDATA.apellidos,
+                telefono: ALLDATA.telefono,
+                edad: ALLDATA.edad,
+                email: ALLDATA.email,
+                img: ALLDATA.img
+            };
+
+            dispatch(saveDataOwner(dataOwner));
+            
+        }
+
+    }, [ALLDATA]);
 
     return(
         <div className='sm:cols-span-1 md:cols-span-2 lg:col-span-3'>

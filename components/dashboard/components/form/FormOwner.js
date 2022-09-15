@@ -54,7 +54,7 @@ export const FormOwner = () => {
         email: '',
     });
 
-     //Treamos los datos del propietario desde la bd
+    //Treamos los datos del propietario desde la bd
     const searchDataOwner = useSelector(state => state.dataOwner.dataOwners);
 
     //Cargar datos en formulario, cuando un propietario se acaba de registrar
@@ -77,10 +77,11 @@ export const FormOwner = () => {
             setVerifyCedula(dataOwner.cedula);
             setVerifyEmail(dataOwner.email);
 
-            /*if(searchDataOwner.ok === true) {
+            if(searchDataOwner.ok === true || dataOwner?.img === `${dataOwner?.cedula}.png`) {
                 setPathImage('');
+                console.log('si paso')
                 setImage(`/uploads/${dataOwner.cedula}.png`);
-            }*/
+            }
         }
 
     }, [dataOwner, searchDataOwner]);
