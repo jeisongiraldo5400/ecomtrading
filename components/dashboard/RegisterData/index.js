@@ -65,7 +65,7 @@ export default function RegisterData(){
 
     useEffect(() => {
 
-        if(ALLDATA?.cedula !== '') {
+        if(ALLDATA) {
             let dataOwner = {
                 cedula: ALLDATA.cedula,
                 nombres: ALLDATA.nombres,
@@ -76,7 +76,33 @@ export default function RegisterData(){
                 img: ALLDATA.img
             };
 
+            let dataDirection = {
+                direccion: ALLDATA.direccion,
+                departamento_id: ALLDATA.departamento_id,
+                municipio_id: ALLDATA.municipio_id,
+                propietario_id:ALLDATA.propietario_id,
+            };
+
+            let dataBank = {
+                banco_id: ALLDATA.banco_id,
+                tipo_cuenta_id: ALLDATA.tipo_cuenta_id,
+                numero_cuenta: ALLDATA.numero_cuenta,
+                propietario_id: ALLDATA.propietario_id
+            };
+
+            let dataStore = {
+                tipo_producto_id: ALLDATA.tipo_producto_id,
+                cuenta_bancaria_id: ALLDATA.cuenta_bancaria_id,
+                cantidad: ALLDATA.cantidad,
+                telefono: ALLDATA.telefono,
+                nombre: ALLDATA.nombre,
+                nit: ALLDATA.nit,
+            };
+
             dispatch(saveDataOwner(dataOwner));
+            dispatch(saveDataDirection(dataDirection));
+            dispatch(saveDataBank(dataBank));
+            dispatch(saveDataStore(dataStore));
             
         }
 

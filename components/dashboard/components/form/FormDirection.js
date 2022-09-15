@@ -49,7 +49,7 @@ export const FormDirection = () => {
 
     useEffect(() => {
 
-        if(Object.entries(dataDirection).length > 0) {
+        if(dataDirection) {
 
             const nameDepartments = departments.find(d => d.id_departamento === dataDirection.departamento_id)?.nombre;
             setNameDepartments(nameDepartments);
@@ -60,7 +60,12 @@ export const FormDirection = () => {
             setCodigoMunicipies(dataDirection.municipio_id);
             setDirection(dataDirection.direccion);
             setIdPropietario(dataDirection.propietario_id);
-            setIsUpdate(true);
+            if(dataDirection?.direccion === null) {
+                setIsUpdate(false);
+            } else {
+                setIsUpdate(true);
+            }
+            console.log('paso por aqui');
         }
 
     }, [ dataDirection ]);
@@ -70,7 +75,7 @@ export const FormDirection = () => {
 
     useEffect(() => {
 
-        if(Object.entries(dataOwner).length > 0){
+        if(dataOwner){
 
             let data = {
                 cedula: dataOwner.cedula

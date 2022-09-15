@@ -62,7 +62,7 @@ export const FormOwner = () => {
 
     useEffect(() => {
 
-        if(Object.entries(dataOwner).length > 0) {
+        if(dataOwner) {
 
             setForm({
                 cedula: dataOwner.cedula,
@@ -223,9 +223,6 @@ export const FormOwner = () => {
         } 
     }, [verifyUpdateImg]);
 
-    const myLoader = () =>  {
-        return image;
-    }
 
     return(
         <div className="grid grid-cols-2">

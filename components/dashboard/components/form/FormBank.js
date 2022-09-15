@@ -51,7 +51,7 @@ export const FormBank = () => {
 
     useEffect(() => {
 
-        if(Object.entries(dataBankOwner).length > 0) {
+        if(dataBankOwner) {
             const nameBank = dataBank.find(b => b.id_banco === dataBankOwner.banco_id)?.nombre;
             setNameBank(nameBank);
             const nameAccountType = dataAccountType.find(t => t.id_tipo_cuenta === dataBankOwner.tipo_cuenta_id)?.descripcion;
@@ -61,7 +61,13 @@ export const FormBank = () => {
             setCodigoAccountType(dataBankOwner.tipo_cuenta_id);
             setCodigoBank(dataBankOwner.banco_id);
             setIdPropietario(dataBankOwner.propietario_id);
-            setIsUpdate(true);
+
+            if(dataBankOwner?.numero_cuenta === null) {
+                setIsUpdate(false);
+            } else {
+                setIsUpdate(true);
+            }
+
         }
 
     }, [ dataBankOwner ]);

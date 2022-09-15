@@ -15,8 +15,6 @@ const selectAllDataOwner = async(req, res) => {
 
         const { cedula } = req.body; 
 
-        console.log(cedula);
-
         const response = await pool.query(`select *
             from propietario p
             left join direccion d on p.id_propietario = d.propietario_id

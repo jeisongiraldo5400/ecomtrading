@@ -77,7 +77,7 @@ export const FormStore = () => {
 
     useEffect(() => {
 
-        if(Object.entries(dataStore).length > 0 ) {
+        if(dataStore) {
 
             const nameTipoProducto = products.find(p => p.id_tipo_producto === dataStore.tipo_producto_id)?.nombre;
             setNameProduct(nameTipoProducto);
@@ -94,7 +94,11 @@ export const FormStore = () => {
                 nit: dataStore.nit,
             });
 
-            setIsUpdate(true);
+            if(dataStore.tipo_producto_id === null) {
+                setIsUpdate(false);
+            } else {
+                setIsUpdate(true);
+            }
         }
 
     }, [dataStore]);

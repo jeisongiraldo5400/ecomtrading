@@ -12,7 +12,9 @@ import { useDispatch, useSelector} from 'react-redux';
 import { get_all_owners, delete_owner, get_all_data_owner_ecom } from '../../../lib/http';
 
 //Actions
-import { deleteOwner } from '../../../app/reducer/propietarioSlice';
+import { deleteOwner, dataOwnerEcom } from '../../../app/reducer/propietarioSlice';
+
+import { saveDataOwner, saveDataDirection, saveDataBank, saveDataStore } from '../../../app/reducer/dataOwner';
 
 //Toast-Notification
 import { ToastContainer, toast } from 'react-toastify';
@@ -35,7 +37,6 @@ export default function Owners() {
     //Traer los datos de los propietarios
     const dataAllOwners = useSelector(state => state.propietario.owners);
 
-
     //Verificamos si se elimino el owner
     const verifyDeleteData = useSelector(state => state.propietario.deleteOwner);
     useEffect(() => {
@@ -56,13 +57,22 @@ export default function Owners() {
         dispatch(delete_owner(data));
     }
 
-
     //Seleccionar toda la información del propietario
     const selectOwner = (e) => {
         let data = {
             cedula: e
         };
         dispatch(get_all_data_owner_ecom(data));
+        router.push('/admin?view=registerOwner');
+    }
+
+    const registerOwner = () => {
+        //Vacio los estados que cargarn los formularios
+        dispatch(dataOwnerEcom());
+        dispatch(saveDataOwner());
+        dispatch(saveDataDirection())
+        dispatch(saveDataBank());
+        dispatch(saveDataStore());
         router.push('/admin?view=registerOwner');
     }
 
@@ -86,7 +96,7 @@ export default function Owners() {
     return(
         <div className="bg-zinc-100 p-10 rounded-[10px]">
             <Link href="admin?view=registerOwner">
-                <a className="bg-green-700 py-2 px-4 mb-5 text-white rounded-[10px]">Registrar propietario</a>
+                <a className="bg-green-700 py-2 px-4 mb-5 text-white rounded-[10px]" onClick={() => registerOwner() }>Registrar propietario</a>
             </Link>
 
             <p className="mt-10 text-2xl text-slate-700">#{dataAllOwners.length} Propietarios</p>
