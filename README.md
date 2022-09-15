@@ -1,8 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## INITIAL PROYECT
+## Ecomtrading
+
+Aplicación desarrollada en NEXTjs, el backend y el frontend se encuentran en la misma aplicación, aprovechando todo el potencial que nos ofrece NEXTjs, para las APIS y el frontend con REACT, para el manejo del estado se utiliza Redux-toolkit.
 
 ## Getting Started
+
+Install dependencies 
+
+```bash
+npm install
+# or
+yarn install 
+```
 
 First, run the development server:
 
@@ -11,6 +20,20 @@ npm run dev
 # or
 yarn dev
 ```
+
+## Módulos de la aplicación 
+
+![image](https://user-images.githubusercontent.com/36921499/190496815-db30c849-5f91-413b-b3d5-c20d04a066bf.png)
+
+# API
+
+![image](https://user-images.githubusercontent.com/36921499/190498241-ad579e7c-5dcd-4828-8036-9f946da5aeff.png)
+
+
+## Librerías instaladas 
+
+![image](https://user-images.githubusercontent.com/36921499/190496421-7f982d6f-e03f-43b5-847f-e1afa539d7fd.png)
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
