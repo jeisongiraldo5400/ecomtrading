@@ -9,6 +9,13 @@ import { useDispatch, useSelector} from 'react-redux';
 //http
 import { get_all_owners } from '../../../lib/http';
 
+//Actions
+import { deleteOwner } from '../../../app/reducer/propietarioSlice';
+
+//Toast-Notification
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 //icons
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
@@ -26,6 +33,16 @@ export default function Owners() {
     const dataAllOwners = useSelector(state => state.propietario.owners);
 
 
+    //Verificamos si se elimino el owner
+    const verifyDeleteData = useSelector(state => state.propietario.deleteOwner);
+    useEffect(() => {
+        
+    }, [verifyDeleteData]);
+
+
+    const deleteData = (data) => {
+        console.log(data);
+    }
 
     const tableOwners = dataAllOwners.map((owner, index) => (
         <tr key={index}>
@@ -34,12 +51,12 @@ export default function Owners() {
             <td className="border border-slate-300">{owner.apellidos}</td>
             <td className="border border-slate-300">{owner.edad}</td>
             <td className="border border-slate-300">{owner.telefono}</td>
-            <td className="border border-slate-300">{owner.direccion}</td>
-            <td className="border border-slate-300">{owner.numero_cuenta}</td>
+            <td className="border border-slate-300">{owner.direccion === ''? 'Sin dirección' : owner.direccion}</td>
+            <td className="border border-slate-300">{owner.numero_cuenta == 0 ? 'No tiene cuenta bancaria': owner.numero_cuenta }</td>
             <td className="border border-slate-300">{owner.email}</td>
             <td colSpan={2} className="sidebar_inline_link border border-slate-300 m-1" >
                 <a className="text-green-400 cursor-pointer"><FaEdit /></a>
-                <a className="text-red-400 cursor-pointer"><FaTrash /></a>
+                <a className="text-red-400 cursor-pointer" onClick={deleteData(owner.cedula)}><FaTrash /></a>
             </td>
         </tr>
     ))
@@ -70,6 +87,7 @@ export default function Owners() {
                 </tbody>
             </table>
 
+            <ToastContainer />
         </div>    
     )
 }

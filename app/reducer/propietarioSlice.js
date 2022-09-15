@@ -7,6 +7,7 @@ const initialState = {
     verifyCreation: [],
     verifyUpdateOwner: [],
     upload: [],
+    deleteOwner: [],
 }
 
 export const propietarioSlice = createSlice({
@@ -28,9 +29,12 @@ export const propietarioSlice = createSlice({
         uploadImgs(state, action) {
             state.upload = action.payload;
         },
+        deleteOwner(state, action) {
+            state.deleteOwner = action.payload;
+        }
     }
 });
 
-export const { getAllOwners, validateData, verifyCreationOwner, updateOwner, uploadImgs } = propietarioSlice.actions;
+export const { getAllOwners, validateData, verifyCreationOwner, updateOwner, uploadImgs, deleteOwner } = propietarioSlice.actions;
 
 export default propietarioSlice.reducer;
