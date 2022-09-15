@@ -26,6 +26,10 @@ yarn dev
 
 ![image](https://user-images.githubusercontent.com/36921499/190496815-db30c849-5f91-413b-b3d5-c20d04a066bf.png)
 
+# API
+
+![image](https://user-images.githubusercontent.com/36921499/190498241-ad579e7c-5dcd-4828-8036-9f946da5aeff.png)
+
 
 ## Librerías instaladas 
 
