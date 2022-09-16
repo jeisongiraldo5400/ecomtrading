@@ -24,14 +24,10 @@ const getAllOwners = async (req, res) => {
             p.edad,
             p.telefono,
             coalesce(d.direccion, '') as direccion,
-            coalesce(cb.numero_cuenta, 0) as numero_cuenta,
-            coalesce(d2.nombre, '') as departamento,
-            coalesce(m.nombre, '') as municipio
+            coalesce(cb.numero_cuenta, 0) as numero_cuenta
         from propietario p
             left join direccion d on p.id_propietario = d.propietario_id
             left join cuenta_bancaria cb on p.id_propietario = cb.propietario_id
-            left join departamentos d2 on d.departamento_id = d2.id_departamento
-            left join municipios m on d2.id_departamento = m.departamento_id
         where p.estado = 1 order by p.nombres DESC`);
         return res.status(200).json(rows);
     }

@@ -133,7 +133,7 @@ export default function Stores(){
 
             { nitStore }
 
-            <p className="mt-2  text-slate-700">#{dataStores.length} Almacenes</p>
+            <p className="mt-2  text-slate-700"># Almacenes <strong>{dataStores.length}</strong> </p>
             <div className="overflow-scroll overflow-auto md:overflow-scroll ">
                 <table className="table-auto border-1 mt-3 mb-10 rounded-[10px] text-center">
                 <thead className="bg-zinc-300 text-gray-500 rounded-sm">

@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { useDispatch, useSelector} from 'react-redux';
 
 //http
-import { get_all_owners, delete_owner, get_all_data_owner_ecom } from '../../../lib/http';
+import {get_all_owners, delete_owner, get_all_data_owner_ecom, search_propietario} from '../../../lib/http';
 
 //Actions
 import { deleteOwner, dataOwnerEcom } from '../../../app/reducer/propietarioSlice';
@@ -41,6 +41,7 @@ export default function Owners() {
     //states
     const [modal, setModal] = useState(false);
     const [dataCedula, setDataCedula] = useState('');
+    const [cedulaSearch, setCedulaSearch] = useState('');
 
 
     //Traer los datos de los propietarios
@@ -95,8 +96,6 @@ export default function Owners() {
             <td className="border border-slate-300">{owner.apellidos}</td>
             <td className="border border-slate-300">{owner.edad}</td>
             <td className="border border-slate-300">{owner.telefono}</td>
-            <td className="border border-slate-300">{owner.departamento === '' ? 'No se ha registrado departamento' : owner.departamento}</td>
-            <td className="border border-slate-300">{owner.municipio === '' ? 'No se ha registrado municipio' : owner.municipio}</td>
             <td className="border border-slate-300">{owner.direccion === ''? 'Sin dirección' : owner.direccion}</td>
             <td className="border border-slate-300">{owner.numero_cuenta == 0 ? 'No tiene cuenta bancaria': owner.numero_cuenta }</td>
             <td className="border border-slate-300">{owner.email}</td>
@@ -122,6 +121,19 @@ export default function Owners() {
         setModal(false);
     }
 
+
+    //Buscar propietario por cédula
+    const handlePropietario = (e) => {
+        setCedulaSearch(e.target.value);
+        if(e.target.value.length > 0) {
+            setTimeout(() => {
+                dispatch(search_propietario({
+                    cedula: e.target.value
+                }))
+            }, 1000);
+        }
+    }
+
     return(
         <div className="bg-zinc-100 p-10 rounded-[10px]">
             <Link href="admin?view=registerOwner">
@@ -139,7 +151,17 @@ export default function Owners() {
                 </Modal> : ''
             }
 
-            <p className="mt-10 text-2xl text-slate-700">#{dataAllOwners.length} Propietarios</p>
+            <label htmlFor="store" className="block mt-10 font-bold text-amber-400 ml-10">Ingrese cédula</label>
+            <input type="text" placeholder="Buscar ..."
+                   name="cedula"
+                   id="cedula"
+                   className="mt-2 mb-2 py-1 px-2 border border-zinc-400 rounded"
+                   onChange={ handlePropietario }
+                   value={ cedulaSearch } />
+
+            { cedulaSearch }
+
+            <p className="mt-3 text-slate-700"># Propietarios <strong>{dataAllOwners.length}</strong></p>
             <div className="overflow-scroll overflow-auto md:overflow-scroll ">
                 <table className="table-auto border-1 mt-3 mb-10 rounded-[10px] text-center snap-normal z-100 shadow">
                 <thead className="bg-zinc-300 text-gray-500 rounded-sm">
@@ -150,8 +172,6 @@ export default function Owners() {
                         <th className="border border-slate-100 px-1">Apellidos</th>
                         <th className="border border-slate-100 px-1">Edad</th>
                         <th className="border border-slate-100 px-1">Teléfono</th>
-                        <th className="border border-slate-100 px-1">Departamento</th>
-                        <th className="border border-slate-100 px-1">Municipio</th>
                         <th className="border border-slate-100 px-1">Dirección</th>
                         <th className="border border-slate-100 px-1"># Cuenta Bancaria</th>
                         <th className="border border-slate-100 px-1">Email</th>
