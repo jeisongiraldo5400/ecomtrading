@@ -3,8 +3,6 @@ import pool from '../../../config/db';
 export default async function Store(req, res) {
     
         switch(req.method) {
-            case 'GET':
-                return await getAccountBanckOwner(req, res);
             case 'POST':
                 return createStore(req, res);
             case 'PUT': 
@@ -19,21 +17,23 @@ const createStore = async (req, res) => {
             propietario_id,
             tipo_producto_id,
             cantidad,
-            telefono,
-            nombre,
+            telefono_almacen,
+            nombre_almacen,
             nit, 
             cuenta_bancaria_id
         } = req.body;
 
+        console.log(req.body);
+
         await pool.query(`INSERT INTO almacen 
-        ( propietario_id, tipo_producto_id, cantidad, telefono, nombre, nit, cuenta_bancaria_id)
+        ( propietario_id, tipo_producto_id, cantidad, telefono_almacen, nombre_almacen, nit, cuenta_bancaria_id)
         VALUES
         ($1, $2, $3, $4, $5, $6, $7)`, [
             propietario_id,
             tipo_producto_id,
             cantidad,
-            telefono,
-            nombre,
+            telefono_almacen,
+            nombre_almacen,
             nit,
             cuenta_bancaria_id
         ]

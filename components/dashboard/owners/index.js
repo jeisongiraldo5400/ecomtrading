@@ -22,7 +22,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 //icons
-import { FaEdit, FaTrash, FaUser } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaUser, FaRegSave } from 'react-icons/fa';
 
 //Modal
 import {Modal} from "../components/Modal";
@@ -125,7 +125,7 @@ export default function Owners() {
     return(
         <div className="bg-zinc-100 p-10 rounded-[10px]">
             <Link href="admin?view=registerOwner">
-                <a className="bg-green-700 py-2 px-4 mb-5 text-white rounded-[10px]" onClick={() => registerOwner() }>Registrar propietario</a>
+                <a className="bg-green-700 py-3 px-10 mb-5 text-white rounded-[10px]" onClick={() => registerOwner() }>Registrar propietario</a>
             </Link>
 
             {

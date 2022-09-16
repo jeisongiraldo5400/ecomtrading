@@ -28,7 +28,7 @@ const getAllOwners = async (req, res) => {
 from propietario p
 left join direccion d on p.id_propietario = d.propietario_id
 left join cuenta_bancaria cb on p.id_propietario = cb.propietario_id
-where p.estado = 1`);
+where p.estado = 1 order by p.nombres DESC `);
         return res.status(200).json(rows);
     }
     catch(err) {

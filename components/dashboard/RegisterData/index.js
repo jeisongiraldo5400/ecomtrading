@@ -79,14 +79,14 @@ export default function RegisterData(){
                 direccion: ALLDATA.direccion,
                 departamento_id: ALLDATA.departamento_id,
                 municipio_id: ALLDATA.municipio_id,
-                propietario_id:ALLDATA.propietario_id,
+                propietario_id: ALLDATA.id_propietario,
             };
 
             let dataBank = {
                 banco_id: ALLDATA.banco_id,
                 tipo_cuenta_id: ALLDATA.tipo_cuenta_id,
                 numero_cuenta: ALLDATA.numero_cuenta,
-                propietario_id: ALLDATA.propietario_id
+                propietario_id: ALLDATA.id_propietario
             };
 
             let dataStore = {

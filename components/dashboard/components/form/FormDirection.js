@@ -50,10 +50,14 @@ export const FormDirection = () => {
 
         if(dataDirection) {
 
-            const nameDepartments = departments.find(d => d.id_departamento === dataDirection.departamento_id)?.nombre;
+            const nameDepartments = departments.find(d => d.id_departamento === dataDirection?.departamento_id)?.nombre;
             setNameDepartments(nameDepartments);
-            const nameMunicipies = municipies.find(m => m.id_municipio === dataDirection.municipio_id)?.nombre;
+            const nameMunicipies = municipies.find(m => m.id_municipio === dataDirection?.municipio_id)?.nombre;
             setNameMunicipies(nameMunicipies);
+
+            dispatch(get_all_municipies({
+                departamento: dataDirection?.departamento_id ? dataDirection.departamento_id : 0
+            }))
 
             setCodigoDepartments(dataDirection.departamento_id);
             setCodigoMunicipies(dataDirection.municipio_id);
@@ -61,7 +65,6 @@ export const FormDirection = () => {
             setIdPropietario(dataDirection.propietario_id);
             if(dataDirection?.direccion === null) {
                 setIsUpdate(false);
-
             } else {
                 setIsUpdate(true);
             }

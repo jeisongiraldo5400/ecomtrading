@@ -40,6 +40,13 @@ export const getDataSlice = createSlice({
 });
 
 
-export const { getAllDataBank, getAllDataAccountType, createAccountBank, selectAccountBank, getAllProductsType, updateAccountBank, searchAccountBank } = getDataSlice.actions;
+export const {
+    getAllDataBank,
+    getAllDataAccountType,
+    createAccountBank,
+    selectAccountBank,
+    getAllProductsType,
+    updateAccountBank,
+    searchAccountBank } = getDataSlice.actions;
 
 export default getDataSlice.reducer;

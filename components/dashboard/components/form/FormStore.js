@@ -119,10 +119,12 @@ export const FormStore = () => {
 
         if(isUpdate === false) {
             //registrar almacen
+            console.log(data);
             toast.success('Almacén registrado correctamente');
             dispatch(create_store(data));
         } else {
             //actualizar almacen
+            console.log(data);
             dispatch(update_store(data));
             toast.success('Almacén actualizado correctamente');
         }
