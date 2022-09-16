@@ -19,7 +19,7 @@ const createStore = async (req, res) => {
             cantidad,
             telefono_almacen,
             nombre_almacen,
-            nit, 
+            nit,
             cuenta_bancaria_id
         } = req.body;
 

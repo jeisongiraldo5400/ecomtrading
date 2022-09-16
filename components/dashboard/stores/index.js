@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux';
 
 //import Http
-import {get_all_stores, delete_store, get_all_data_owner_ecom, delete_owner} from '../../../lib/http';
+import {get_all_stores, delete_store, get_all_data_owner_ecom, delete_owner, store_search} from '../../../lib/http';
 
 //Toast-Notification
 import { ToastContainer, toast } from 'react-toastify';
@@ -32,6 +32,7 @@ export default function Stores(){
     //states
     const [modal, setModal] = useState(false);
     const [dataCedula, setDataCedula] = useState('');
+    const [nitStore, setNitStore] = useState('');
 
     //Se pasa el estado del almacen a 0 
     const deleteStore = (e) => {
@@ -72,7 +73,6 @@ export default function Stores(){
         setModal(false);
     }
 
-
     const tableStore = dataStores.map((store, index) => (
         <tr key={index}>
             <td className="border border-slate-300 p-1">{store.nit}</td>
@@ -87,6 +87,23 @@ export default function Stores(){
             </td>
         </tr>
     ));
+
+
+    //Buscar almacen
+    const handleStore = (e) => {
+
+        setNitStore(e.target.value);
+
+        if(e.target.value.length > 0) {
+            setTimeout(() => {
+                dispatch(store_search({
+                    nit: e.target.value
+                }));
+            }, 1000);
+        }
+
+    }
+
 
     return (
         <div className="bg-zinc-100 p-10 rounded-[10px]">
@@ -106,7 +123,17 @@ export default function Stores(){
                 </Modal> : ''
             }
 
-            <p className="mt-10 text-2xl text-slate-700">#{dataStores.length} Almacenes</p>
+            <label htmlFor="store" className="block mt-10 font-bold text-amber-400 ml-10">Ingrese el nit</label>
+            <input type="text" placeholder="Buscar ..."
+                   name="store"
+                   id="store"
+                   className="mt-2 mb-2 py-1 px-2 border border-zinc-400 rounded"
+                   onChange={ handleStore }
+                   value={ nitStore } />
+
+            { nitStore }
+
+            <p className="mt-2  text-slate-700">#{dataStores.length} Almacenes</p>
             <div className="overflow-scroll overflow-auto md:overflow-scroll ">
                 <table className="table-auto border-1 mt-3 mb-10 rounded-[10px] text-center">
                 <thead className="bg-zinc-300 text-gray-500 rounded-sm">
