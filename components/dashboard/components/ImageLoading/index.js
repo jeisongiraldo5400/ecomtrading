@@ -13,6 +13,7 @@ export const ImageLoading = ({ url}) => {
                 width={150}
                 height={150}
                 className="object-contain"
+                priority
             /> 
     );
 }

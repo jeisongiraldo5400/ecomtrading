@@ -22,7 +22,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 //icons
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaUser } from 'react-icons/fa';
+
 //Modal
 import {Modal} from "../components/Modal";
 
@@ -86,7 +87,9 @@ export default function Owners() {
 
     const tableOwners = dataAllOwners.map((owner, index) => (
         <tr key={index}>
-            <td className="border border-slate-300"></td>
+            <td className="border border-slate-300">
+                <img src={`/uploads/${owner.cedula}.png`} />
+            </td>
             <td className="border border-slate-300">{owner.cedula}</td>
             <td className="border border-slate-300">{owner.nombres}</td>
             <td className="border border-slate-300">{owner.apellidos}</td>
