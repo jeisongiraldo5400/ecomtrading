@@ -64,6 +64,7 @@ export const FormBank = () => {
 
             if(dataBankOwner?.numero_cuenta === null) {
                 setIsUpdate(false);
+
             } else {
                 setIsUpdate(true);
             }
@@ -124,7 +125,7 @@ export const FormBank = () => {
 
     useEffect(() => {
 
-        if(searchDataOwner.ok === true) {
+        if(searchDataOwner?.ok === true) {
             setIdPropietario(searchDataOwner.data[0].id_propietario);
             setIsActiveButton(false);
             setMessage('');
@@ -162,7 +163,7 @@ export const FormBank = () => {
         { message ? <p className="bg-blue-600 py-2 text-center text-white mb-8 rounded">{message}</p> : '' }
 
         {
-            searchDataOwner.ok === true ? 
+            searchDataOwner?.ok === true ?
             <div className="bg-green-600 p-2 rounded-md mb-4">
                 <ul>
                     <li className="text-2xl">Propietario</li>

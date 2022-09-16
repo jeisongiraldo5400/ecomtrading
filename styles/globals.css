@@ -37,6 +37,7 @@
 }
 
 
+/* MODAL */
 .modals  {
     position: fixed;
     height: 200px;
@@ -56,6 +57,5 @@
         margin-left: 100%;
         width: 300%
     }
-
-
 }
+

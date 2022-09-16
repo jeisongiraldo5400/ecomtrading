@@ -13,8 +13,9 @@ import { get_all_owners, delete_owner, get_all_data_owner_ecom } from '../../../
 
 //Actions
 import { deleteOwner, dataOwnerEcom } from '../../../app/reducer/propietarioSlice';
+import { searchAccountBank } from '../../../app/reducer/getDataSlice';
 
-import { saveDataOwner, saveDataDirection, saveDataBank, saveDataStore } from '../../../app/reducer/dataOwner';
+import { saveDataOwner, saveDataDirection, saveDataBank, saveDataStore, getAllDataOwner } from '../../../app/reducer/dataOwner';
 
 //Toast-Notification
 import { ToastContainer, toast } from 'react-toastify';
@@ -78,22 +79,27 @@ export default function Owners() {
         dispatch(saveDataDirection())
         dispatch(saveDataBank());
         dispatch(saveDataStore());
+        dispatch(getAllDataOwner());
+        dispatch(searchAccountBank());
         router.push('/admin?view=registerOwner');
     }
 
     const tableOwners = dataAllOwners.map((owner, index) => (
         <tr key={index}>
+            <td className="border border-slate-300"></td>
             <td className="border border-slate-300">{owner.cedula}</td>
             <td className="border border-slate-300">{owner.nombres}</td>
             <td className="border border-slate-300">{owner.apellidos}</td>
             <td className="border border-slate-300">{owner.edad}</td>
             <td className="border border-slate-300">{owner.telefono}</td>
+            <td className="border border-slate-300"></td>
+            <td className="border border-slate-300"></td>
             <td className="border border-slate-300">{owner.direccion === ''? 'Sin dirección' : owner.direccion}</td>
             <td className="border border-slate-300">{owner.numero_cuenta == 0 ? 'No tiene cuenta bancaria': owner.numero_cuenta }</td>
             <td className="border border-slate-300">{owner.email}</td>
             <td colSpan={2} className="sidebar_inline_link border border-slate-300 m-1" >
-                <a className="text-green-400 cursor-pointer" onClick={() => selectOwner(owner.cedula) }><FaEdit /></a>
-                <a className="text-red-400 cursor-pointer" onClick={() => deleteData(owner.cedula) }><FaTrash /></a>
+                <a className="text-green-400 cursor-pointer text-2xl" onClick={() => selectOwner(owner.cedula) }><FaEdit /></a>
+                <a className="text-red-400 cursor-pointer text-2xl" onClick={() => deleteData(owner.cedula) }><FaTrash /></a>
             </td>
         </tr>
     ))
@@ -122,7 +128,7 @@ export default function Owners() {
             {
                 modal ?
                 <Modal className="text-center">
-                    <p className="mt-10 text-2xl ml-3">¿Seguro que quiere eliminar el propietario?</p>
+                    <p className="mt-3 text-2xl ml-3">¿Seguro que quiere eliminar el propietario?</p>
                     <div className="">
                         <button className="bg-green-900 py-2 px-6 rounded-md text-white mt-5 w-60" onClick={() => confirm()}>Eliminar</button>
                         <button className="bg-zinc-400 py-2 px-6 rounded-md text-white mt-5 ml-5 w-60" onClick={() => cancel()}>Cancelar</button>
@@ -131,14 +137,18 @@ export default function Owners() {
             }
 
             <p className="mt-10 text-2xl text-slate-700">#{dataAllOwners.length} Propietarios</p>
-            <table className="table-auto border-1 mt-3 mb-10 rounded-[10px] text-center">
+            <div className="overflow-scroll overflow-auto md:overflow-scroll ">
+                <table className="table-auto border-1 mt-3 mb-10 rounded-[10px] text-center snap-normal z-100 shadow">
                 <thead className="bg-zinc-300 text-gray-500 rounded-sm">
                     <tr>
+                        <th className="border border-slate-100 px-1">Imagen</th>
                         <th className="border border-slate-100 px-1">Cédula</th>
                         <th className="border border-slate-100 px-1">Nombres</th>
                         <th className="border border-slate-100 px-1">Apellidos</th>
                         <th className="border border-slate-100 px-1">Edad</th>
                         <th className="border border-slate-100 px-1">Teléfono</th>
+                        <th className="border border-slate-100 px-1">Departamento</th>
+                        <th className="border border-slate-100 px-1">Municipio</th>
                         <th className="border border-slate-100 px-1">Dirección</th>
                         <th className="border border-slate-100 px-1"># Cuenta Bancaria</th>
                         <th className="border border-slate-100 px-1">Email</th>
@@ -149,6 +159,7 @@ export default function Owners() {
                     { tableOwners }
                 </tbody>
             </table>
+            </div>
 
             <ToastContainer
                 position="top-right"

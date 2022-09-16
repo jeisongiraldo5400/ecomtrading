@@ -82,11 +82,11 @@ export default function Stores(){
             <td className="border border-slate-300 p-1">{store.nombre_propietario} {store.apellidos}</td>
             <td className="border border-slate-300 p-1">{store.email}</td>
             <td className="sidebar_inline_link border border-slate-300">
-                <a className="text-green-400 cursor-pointer p-1" onClick={() => selectOwner(store.cedula) }><FaEdit /></a>
-                <a className="text-red-400 cursor-pointer p-1" onClick={() => deleteStore(store.id_almacen)}><FaTrash /></a>
+                <a className="text-green-400 cursor-pointer p-1 text-2xl" onClick={() => selectOwner(store.cedula) }><FaEdit /></a>
+                <a className="text-red-400 cursor-pointer p-1 text-2xl" onClick={() => deleteStore(store.id_almacen)}><FaTrash /></a>
             </td>
         </tr>
-    ))
+    ));
 
     return (
         <div className="bg-zinc-100 p-10 rounded-[10px]">
@@ -94,7 +94,7 @@ export default function Stores(){
 
             { modal ?
                 <Modal>
-                    <p className="mt-10 text-2xl ml-3">¿Seguro que quiere eliminar el almacén?</p>
+                    <p className="mt-3 text-2xl ml-3">¿Seguro que quiere eliminar el almacén?</p>
                     <div className="">
                         <button className="bg-green-900 py-2 px-6 rounded-md text-white mt-5 w-60"
                                 onClick={() => confirm()}>Eliminar
@@ -107,7 +107,8 @@ export default function Stores(){
             }
 
             <p className="mt-10 text-2xl text-slate-700">#{dataStores.length} Almacenes</p>
-            <table className="table-auto border-1 mt-3 mb-10 rounded-[10px] text-center">
+            <div className="overflow-scroll overflow-auto md:overflow-scroll ">
+                <table className="table-auto border-1 mt-3 mb-10 rounded-[10px] text-center">
                 <thead className="bg-zinc-300 text-gray-500 rounded-sm">
                     <tr>
                         <th className="border border-slate-100 px-4">NIT</th>
@@ -123,6 +124,7 @@ export default function Stores(){
                     { tableStore }
                 </tbody>
             </table>
+            </div>
 
             <ToastContainer
                 position="top-right"

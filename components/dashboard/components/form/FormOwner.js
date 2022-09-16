@@ -77,7 +77,7 @@ export const FormOwner = () => {
             setVerifyCedula(dataOwner.cedula);
             setVerifyEmail(dataOwner.email);
 
-            if(searchDataOwner.ok === true || dataOwner?.img === `${dataOwner?.cedula}.png`) {
+            if(searchDataOwner?.ok === true || dataOwner?.img === `${dataOwner?.cedula}.png`) {
                 setPathImage('');
                 console.log('si paso')
                 setImage(`/uploads/${dataOwner.cedula}.png`);

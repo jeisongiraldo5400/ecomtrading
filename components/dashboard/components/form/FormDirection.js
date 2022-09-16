@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from "../Button"
 import { Spinner } from '../spinner';
 
-
 //Actions
 import { saveDataDirection } from '../../../../app/reducer/dataOwner';
 
@@ -62,6 +61,7 @@ export const FormDirection = () => {
             setIdPropietario(dataDirection.propietario_id);
             if(dataDirection?.direccion === null) {
                 setIsUpdate(false);
+
             } else {
                 setIsUpdate(true);
             }
@@ -153,7 +153,7 @@ export const FormDirection = () => {
 
     useEffect(() => {
 
-        if(searchDataOwner.ok === true) {
+        if(searchDataOwner?.ok === true) {
             setIdPropietario(searchDataOwner.data[0].id_propietario);
             setIsActiveButton(false);
             setMessage('');
@@ -181,7 +181,7 @@ export const FormDirection = () => {
     const verifyUpdateDirection = useSelector(state => state.direction.updateDirection);
     
     useEffect(() => {
-        if(verifyUpdateDirection.ok === true) {
+        if(verifyUpdateDirection?.ok === true) {
             setLoading(false);
             setIsActiveButton(false);
         }
@@ -193,7 +193,7 @@ export const FormDirection = () => {
             { message ? <p className="bg-blue-600 py-2 text-center text-white mb-8 rounded">{message}</p> : '' }
             
             {
-                searchDataOwner.ok === true ? 
+                searchDataOwner?.ok === true ?
                 <div className="bg-green-600 p-2 rounded-md mb-4">
                     <ul>
                         <li className="text-2xl">Propietario</li>

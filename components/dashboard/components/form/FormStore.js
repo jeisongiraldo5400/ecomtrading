@@ -50,18 +50,14 @@ export const FormStore = () => {
     //Traemos los datos bancarios del propietario desde la bd
     const dataBackAccount = useSelector(state => state.getData.searchAccountBank);
 
-        useEffect(() => {
-
-            if(dataBackAccount.length > 0) {
-                console.log(dataBackAccount);
-            } else {
-                setIsActiveButton(true);
-                setMessageBank('No se encontraron datos bancarios');
-                
-            }
-
-        }, [dataBackAccount]);
-
+    useEffect(() => {
+        if(dataBackAccount?.length > 0) {
+            setIsActiveButton(false);
+        } else {
+            setIsActiveButton(true);
+            setMessageBank('No se encontraron datos bancarios');
+        }
+    }, [dataBackAccount]);
 
     //Traer los tipos de productos de la bd
     const products = useSelector(state => state.getData.productsType);
@@ -83,7 +79,7 @@ export const FormStore = () => {
             setNameProduct(nameTipoProducto);
             setCodeProduct(dataStore.tipo_producto_id);
 
-            const nameBank = dataBackAccount.find(b => b.id_cuenta_bancaria === dataStore.cuenta_bancaria_id)?.numero_cuenta;
+            const nameBank = dataBackAccount?.find(b => b.id_cuenta_bancaria === dataStore.cuenta_bancaria_id)?.numero_cuenta;
             setNameAccountType(nameBank);
             setCodeAccountType(dataStore.cuenta_bancaria_id);
             
@@ -151,13 +147,12 @@ export const FormStore = () => {
         })
     }
 
-
     //Treamos los datos del propietario desde la bd
     const searchDataOwner = useSelector(state => state.dataOwner.dataOwners);
 
     useEffect(() => {
 
-        if(searchDataOwner.ok === true) {
+        if(searchDataOwner?.ok === true) {
             setIdPropietario(searchDataOwner.data[0].id_propietario);
             //Buscamos los datos bancarios del propietario
             dispatch(search_bank_account({
@@ -177,7 +172,7 @@ export const FormStore = () => {
 
     useEffect(() => {
         if(validateNit.ok === true) {
-            setMessagNit(validateDataOwner);
+            setMessagNit(validateNit);
             setIsActiveButton(true);
         } else if(validateNit.ok === false) {
             setMessagNit('');
@@ -185,24 +180,24 @@ export const FormStore = () => {
         }
     }, [ validateNit ]);
 
-
     const handleAccountType = (e) => {
         setNameAccountType(e.target.value);
         const codeAccountType = dataBackAccount.find(p => p.numero_cuenta === e.target.value)?.id_cuenta_bancaria;
         setCodeAccountType(codeAccountType);
     }
 
-    //Verificamos si se creo el almacen 
+    //Verificamos si se creo o actualizo el almacen
     const verifyDataStore = useSelector(state => state.dataStore.dataStore);
+    const verifyUpdateStore = useSelector(state => state.dataStore.updateStore);
 
     useEffect(() => {
-        if(verifyDataStore.ok == true) {
+        if(verifyDataStore?.ok === true || verifyUpdateStore?.ok === true) {
             setLoading(false);
-            setIsActiveButton(true);
+            setIsActiveButton(false);
         }else {
             setLoading(false);
         }
-    }, [verifyDataStore]);
+    }, [verifyDataStore, verifyUpdateStore]);
 
 
     return (
@@ -213,7 +208,7 @@ export const FormStore = () => {
             { messageBank ? <p className="bg-red-600 py-2 text-center text-white mb-8 rounded">{ messageBank }</p> : '' }
 
             {
-                searchDataOwner.ok === true ? 
+                searchDataOwner?.ok === true ?
                 <div className="bg-green-600 p-2 rounded-md mb-4">
                     <ul>
                         <li className="text-2xl">Propietario</li>
@@ -312,7 +307,7 @@ export const FormStore = () => {
                 onChange={handleChange}
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
-            <Button name='Guardar Almacén' color='green-500' />
+            <Button name='Guardar Almacén' color='green-500' state={isActiveButton} />
 
             <div className="mt-5">
                 <Spinner state={loading}/>
