@@ -90,7 +90,7 @@ export default function Stores(){
 
     return (
         <div className="bg-zinc-100 p-10 rounded-[10px]">
-            <p className="text-2xl">Almacenes</p>
+            <p className="text-2xl bg-blue-300 p-3 rounded text-gray-700">Almacenes</p>
 
             { modal ?
                 <Modal>

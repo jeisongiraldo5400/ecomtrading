@@ -95,8 +95,8 @@ export default function Owners() {
             <td className="border border-slate-300">{owner.apellidos}</td>
             <td className="border border-slate-300">{owner.edad}</td>
             <td className="border border-slate-300">{owner.telefono}</td>
-            <td className="border border-slate-300"></td>
-            <td className="border border-slate-300"></td>
+            <td className="border border-slate-300">{owner.departamento === '' ? 'No se ha registrado departamento' : owner.departamento}</td>
+            <td className="border border-slate-300">{owner.municipio === '' ? 'No se ha registrado municipio' : owner.municipio}</td>
             <td className="border border-slate-300">{owner.direccion === ''? 'Sin dirección' : owner.direccion}</td>
             <td className="border border-slate-300">{owner.numero_cuenta == 0 ? 'No tiene cuenta bancaria': owner.numero_cuenta }</td>
             <td className="border border-slate-300">{owner.email}</td>
