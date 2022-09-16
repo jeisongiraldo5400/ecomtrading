@@ -1,4 +1,4 @@
-import React, { useEffect, usState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router'
 
@@ -22,6 +22,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 //icons
 import { FaEdit, FaTrash } from 'react-icons/fa';
+//Modal
+import {Modal} from "../components/Modal";
 
 
 export default function Owners() {
@@ -32,6 +34,11 @@ export default function Owners() {
     useEffect(() => {
         dispatch(get_all_owners());
     }, []);
+
+
+    //states
+    const [modal, setModal] = useState(false);
+    const [dataCedula, setDataCedula] = useState('');
 
 
     //Traer los datos de los propietarios
@@ -50,11 +57,9 @@ export default function Owners() {
 
     //Solo se coloca el estado del propietario en 0
     const deleteData = (e) => {
-        toast.success('Propietario eliminado');
-        let data = {
-            cedula: e
-        };
-        dispatch(delete_owner(data));
+
+        setModal(true);
+        setDataCedula(e);
     }
 
     //Seleccionar toda la información del propietario
@@ -93,11 +98,37 @@ export default function Owners() {
         </tr>
     ))
 
+
+    //Envetos del modal
+    const cancel = () => {
+        setModal(false);
+    }
+
+    const confirm = () => {
+        toast.success('Propietario eliminado');
+        let data = {
+            cedula: dataCedula
+        };
+        dispatch(delete_owner(data));
+        setModal(false);
+    }
+
     return(
         <div className="bg-zinc-100 p-10 rounded-[10px]">
             <Link href="admin?view=registerOwner">
                 <a className="bg-green-700 py-2 px-4 mb-5 text-white rounded-[10px]" onClick={() => registerOwner() }>Registrar propietario</a>
             </Link>
+
+            {
+                modal ?
+                <Modal className="text-center">
+                    <p className="mt-10 text-2xl ml-3">¿Seguro que quiere eliminar el propietario?</p>
+                    <div className="">
+                        <button className="bg-green-900 py-2 px-6 rounded-md text-white mt-5 w-60" onClick={() => confirm()}>Eliminar</button>
+                        <button className="bg-zinc-400 py-2 px-6 rounded-md text-white mt-5 ml-5 w-60" onClick={() => cancel()}>Cancelar</button>
+                        </div>
+                </Modal> : ''
+            }
 
             <p className="mt-10 text-2xl text-slate-700">#{dataAllOwners.length} Propietarios</p>
             <table className="table-auto border-1 mt-3 mb-10 rounded-[10px] text-center">

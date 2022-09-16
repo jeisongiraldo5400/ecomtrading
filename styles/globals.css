@@ -35,3 +35,27 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 0.5em;
 }
+
+
+.modals  {
+    position: fixed;
+    height: 200px;
+    width: 100vh;
+    padding: 40px 0px 40px 40px;
+    border-radius: 20px;
+    background-color: rgb(34 197 94);
+    color: white;
+    opacity: 0.9;
+    animation-name: example;
+    animation-duration: 0.5s;
+}
+
+@keyframes example {
+
+    from {
+        margin-left: 100%;
+        width: 300%
+    }
+
+
+}
