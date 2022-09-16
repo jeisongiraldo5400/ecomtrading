@@ -59,8 +59,8 @@ const updateStore = async(req, res) => {
         const {
             tipo_producto_id,
             cantidad,
-            telefono,
-            nombre,
+            telefono_almacen,
+            nombre_almacen,
             nit, 
             cuenta_bancaria_id
         } = req.body;
@@ -68,15 +68,15 @@ const updateStore = async(req, res) => {
         await pool.query(`update almacen 
             set tipo_producto_id = $1, 
                 cantidad = $2, 
-                telefono = $3, 
-                nombre = $4, 
+                telefono_almacen = $3, 
+                nombre_almacen = $4, 
                 nit = $5, 
                 cuenta_bancaria_id = $6
             where nit = '${nit}'`, [
             tipo_producto_id,
             cantidad,
-            telefono,
-            nombre,
+            telefono_almacen,
+            nombre_almacen,
             nit,
             cuenta_bancaria_id
         ]

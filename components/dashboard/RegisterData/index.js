@@ -9,7 +9,6 @@ import { FormDirection } from '../components/form/FormDirection';
 import { FormStore } from '../components/form/FormStore';
 import { FormBank } from '../components/form/FormBank';
 
-
 //Actions
 import {
     saveDataOwner,
@@ -94,8 +93,8 @@ export default function RegisterData(){
                 tipo_producto_id: ALLDATA.tipo_producto_id,
                 cuenta_bancaria_id: ALLDATA.cuenta_bancaria_id,
                 cantidad: ALLDATA.cantidad,
-                telefono: ALLDATA.telefono,
-                nombre: ALLDATA.nombre,
+                telefono_almacen: ALLDATA.telefono_almacen,
+                nombre_almacen: ALLDATA.nombre_almacen,
                 nit: ALLDATA.nit,
             };
 

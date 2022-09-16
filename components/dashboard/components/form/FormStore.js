@@ -42,8 +42,8 @@ export const FormStore = () => {
 
     const [form, setForm] = useState({
         cantidad: '',
-        telefono: '',
-        nombre: '',
+        telefono_almacen: '',
+        nombre_almacen: '',
         nit: '',
     });
 
@@ -89,8 +89,8 @@ export const FormStore = () => {
             
             setForm({
                 cantidad: dataStore.cantidad,
-                telefono: dataStore.telefono,
-                nombre: dataStore.nombre,
+                telefono_almacen: dataStore.telefono_almacen,
+                nombre_almacen: dataStore.nombre_almacen,
                 nit: dataStore.nit,
             });
 
@@ -115,8 +115,8 @@ export const FormStore = () => {
             propietario_id: idPropietario,
             tipo_producto_id: codeProduct,
             cantidad: form.cantidad,
-            telefono: form.telefono,
-            nombre: form.nombre,
+            telefono_almacen: form.telefono_almacen,
+            nombre_almacen: form.nombre_almacen,
             nit: form.nit,
             cuenta_bancaria_id: codeAccountType,
         }
@@ -195,8 +195,6 @@ export const FormStore = () => {
     //Verificamos si se creo el almacen 
     const verifyDataStore = useSelector(state => state.dataStore.dataStore);
 
-    console.log(verifyDataStore);
-
     useEffect(() => {
         if(verifyDataStore.ok == true) {
             setLoading(false);
@@ -243,14 +241,14 @@ export const FormStore = () => {
 
             { messageNit?.tipo === 'nit' ? <label className="block p-2 bg-red-500 mt-2 rounded-md mb-2">{ messageNit.message }</label> : ''}
 
-            <label htmlFor="nombre" className="block text-sx font-bold mb-2">Nombre: </label>
+            <label htmlFor="nombre_almacen" className="block text-sx font-bold mb-2">Nombre: </label>
             <input 
                 type="text" 
-                name="nombre" 
-                id="nombre" 
+                name="nombre_almacen"
+                id="nombre_almacen"
                 placeholder="Nombre"
                 required
-                value={form.nombre}
+                value={form.nombre_almacen}
                 onChange={handleChange}
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
@@ -303,14 +301,14 @@ export const FormStore = () => {
                     }
                 </select>
 
-            <label htmlFor="telefono" className="block text-sx font-bold mb-2">Teléfono: </label>
+            <label htmlFor="telefono_almacen" className="block text-sx font-bold mb-2">Teléfono: </label>
             <input 
                 type="text" 
-                name="telefono" 
-                id="telefono" 
+                name="telefono_almacen"
+                id="telefono_almacen"
                 placeholder="Teléfono"
                 required
-                value={form.telefono}
+                value={form.telefono_almacen}
                 onChange={handleChange}
                 className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
@@ -320,7 +318,14 @@ export const FormStore = () => {
                 <Spinner state={loading}/>
             </div>
 
-            <ToastContainer />
+            <ToastContainer
+                position="top-right"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                draggable />
 
         </form>
     )

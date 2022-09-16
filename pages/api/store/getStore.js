@@ -17,8 +17,8 @@ const getAllDataStore = async(req, res) => {
     try{
         const { rows } = await pool.query(`select a.id_almacen,
             a.cantidad,
-            a.telefono,
-            a.nombre,
+            a.telefono_almacen,
+            a.nombre_almacen,
             a.nit,
             concat(p.nombres, ' ', p.apellidos) as nombre_propietario,
             p.email,

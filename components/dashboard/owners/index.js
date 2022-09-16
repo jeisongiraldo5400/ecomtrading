@@ -99,7 +99,7 @@ export default function Owners() {
     ))
 
 
-    //Envetos del modal
+    //Enventos del modal
     const cancel = () => {
         setModal(false);
     }
@@ -150,7 +150,14 @@ export default function Owners() {
                 </tbody>
             </table>
 
-            <ToastContainer />
+            <ToastContainer
+                position="top-right"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                draggable />
         </div>    
     )
 }

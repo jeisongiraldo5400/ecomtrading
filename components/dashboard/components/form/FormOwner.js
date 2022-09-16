@@ -225,126 +225,136 @@ export const FormOwner = () => {
 
 
     return(
-        <div className="grid grid-cols-2">
-            <form className="bg-green-500 max-w-sm p-4 mt-4 mb-4 ml-10 text-green-100 rounded-[16px]" onSubmit={handlerOwner}>
+        <>
+            <div className="grid grid-cols-2">
+                <form className="bg-green-500 max-w-sm p-4 mt-4 mb-4 ml-10 text-green-100 rounded-[16px]" onSubmit={handlerOwner}>
 
-            <h1 className="text-2xl text-bold text-gray pb-3">{
-                update === false ? 'Registrar Propietario' : 'Actualizar Propietario'
-            }</h1>
+                <h1 className="text-2xl text-bold text-gray pb-3">{
+                    update === false ? 'Registrar Propietario' : 'Actualizar Propietario'
+                }</h1>
 
-            <label htmlFor="cedula" className="block text-sx font-bold mb-2">Cedula: </label>
-            <input 
-                type="number" 
-                name="cedula" 
-                id="cedula" 
-                onChange={handleChange}
-                value={form.cedula}
-                required
-                className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400" placeholder="Cédula" />
+                <label htmlFor="cedula" className="block text-sx font-bold mb-2">Cedula: </label>
+                <input
+                    type="number"
+                    name="cedula"
+                    id="cedula"
+                    onChange={handleChange}
+                    value={form.cedula}
+                    required
+                    className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400" placeholder="Cédula" />
 
-            { message?.tipo === 'cedula' ? <label className="block p-2 bg-red-500 mt-2 rounded-md mb-2">{ message.message }</label> : ''}
+                { message?.tipo === 'cedula' ? <label className="block p-2 bg-red-500 mt-2 rounded-md mb-2">{ message.message }</label> : ''}
 
-            <label htmlFor="nombres" className="block text-sx font-bold mb-2 mt-2">Nombres: </label>
-            <input 
-                type="text" 
-                name="nombres" 
-                id="nombres"
-                placeholder="Nombres"
-                onChange={handleChange}
-                value={form.nombres}
-                required
-                disabled={message?.ok == true ? true : false}
-                className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
+                <label htmlFor="nombres" className="block text-sx font-bold mb-2 mt-2">Nombres: </label>
+                <input
+                    type="text"
+                    name="nombres"
+                    id="nombres"
+                    placeholder="Nombres"
+                    onChange={handleChange}
+                    value={form.nombres}
+                    required
+                    disabled={message?.ok == true ? true : false}
+                    className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
-            <label htmlFor="apellidos" className="block text-sx font-bold mb-2 mt-2">Apellidos: </label>
-            <input 
-                type="text" 
-                name="apellidos" 
-                id="apellidos" 
-                placeholder="Apellidos"
-                onChange={handleChange}
-                value={form.apellidos}
-                required
-                disabled={message?.ok == true ? true : false}
-                className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
+                <label htmlFor="apellidos" className="block text-sx font-bold mb-2 mt-2">Apellidos: </label>
+                <input
+                    type="text"
+                    name="apellidos"
+                    id="apellidos"
+                    placeholder="Apellidos"
+                    onChange={handleChange}
+                    value={form.apellidos}
+                    required
+                    disabled={message?.ok == true ? true : false}
+                    className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
-            <label htmlFor="email" className="block text-sx font-bold mb-2 mt-2">Email: </label>
-            <input 
-                type="email" 
-                name="email" 
-                id="email" 
-                placeholder="Email"
-                onChange={handleChange}
-                value={form.email}
-                required
-                className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
+                <label htmlFor="email" className="block text-sx font-bold mb-2 mt-2">Email: </label>
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                    onChange={handleChange}
+                    value={form.email}
+                    required
+                    className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
-            { message?.tipo === 'email' ? <label className="block p-2 bg-red-500 mt-2 rounded-md mb-2">{ message.message }</label> : ''}
+                { message?.tipo === 'email' ? <label className="block p-2 bg-red-500 mt-2 rounded-md mb-2">{ message.message }</label> : ''}
 
-            <label htmlFor="telefono" className="block text-sx font-bold mb-2 mt-2">Telefono:</label>
-            <input 
-                type="text" 
-                name="telefono" 
-                id="telefono" 
-                placeholder="Teléfono"
-                onChange={handleChange}
-                value={form.telefono}
-                required
-                disabled={message?.ok == true ? true : false}
-                className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
+                <label htmlFor="telefono" className="block text-sx font-bold mb-2 mt-2">Telefono:</label>
+                <input
+                    type="text"
+                    name="telefono"
+                    id="telefono"
+                    placeholder="Teléfono"
+                    onChange={handleChange}
+                    value={form.telefono}
+                    required
+                    disabled={message?.ok == true ? true : false}
+                    className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400"/>
 
-            <label htmlFor="edad" className="block text-sx font-bold mb-2 mt-2">Edad: </label>
-            <input 
-                type="text" 
-                name="edad" 
-                id="edad" 
-                placeholder="Edad"
-                onChange={handleChange}
-                value={form.edad}
-                required
-                disabled={message?.ok == true ? true : false}
-                className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400" />
+                <label htmlFor="edad" className="block text-sx font-bold mb-2 mt-2">Edad: </label>
+                <input
+                    type="text"
+                    name="edad"
+                    id="edad"
+                    placeholder="Edad"
+                    onChange={handleChange}
+                    value={form.edad}
+                    required
+                    disabled={message?.ok == true ? true : false}
+                    className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-1 block w-full appearance-none leading-normal text-slate-400" />
 
-            <label htmlFor="image" className="block text-sx font-bold mb-2 mt-2">Imagen: </label>
-            <input 
-                type="file" 
-                name="image" 
-                id="image" 
-                placeholder="image"
-                onChange={onFileChange}
-                disabled={message?.ok == true ? true : false}
-                className="
-                block w-full text-sm text-slate-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-full file:border-0
-                file:text-sm file:font-semibold
-                file:bg-violet-50 file:text-black
-                hover:file:bg-violet-100 " />
-            
+                <label htmlFor="image" className="block text-sx font-bold mb-2 mt-2">Imagen: </label>
+                <input
+                    type="file"
+                    name="image"
+                    id="image"
+                    placeholder="image"
+                    onChange={onFileChange}
+                    disabled={message?.ok == true ? true : false}
+                    className="
+                    block w-full text-sm text-slate-500
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-full file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-violet-50 file:text-black
+                    hover:file:bg-violet-100 " />
 
-            <Button name="Guardar propietario" color="green-500" state={isActiveButton}/>
 
-            <div className="mt-5">
-                <Spinner state={loading}/>
-            </div>
+                <Button name="Guardar propietario" color="green-500" state={isActiveButton}/>
 
-            <ToastContainer />
+                <div className="mt-5">
+                    <Spinner state={loading}/>
+                </div>
 
-            </form>
+                </form>
 
-            <div className="ml-5 mt-10">
-                <div className="bg-white w-72 ml-10 h-64 rounded-[26px] text-center border-2 shadow-md">
-                    <br />
-                    <p className="">Fotografía</p>
-                    <br />
-                    {
-                        pathImage !== '' || image !== '' ? 
-                        <ImageLoading url={pathImage !== '' ? pathImage : image } />
-                    : <FontAwesomeIcon icon={faUser} className="h-32 text-zinc-400" /> 
-                    }
-                    
+                <div className="ml-5 mt-10">
+                    <div className="bg-white w-72 ml-10 h-64 rounded-[26px] text-center border-2 shadow-md">
+                        <br />
+                        <p className="">Fotografía</p>
+                        <br />
+                        {
+                            pathImage !== '' || image !== '' ?
+                            <ImageLoading url={pathImage !== '' ? pathImage : image } />
+                        : <FontAwesomeIcon icon={faUser} className="h-32 text-zinc-400" />
+                        }
+
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <ToastContainer
+                position="top-right"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                draggable
+            />
+        </>
     )
 }
